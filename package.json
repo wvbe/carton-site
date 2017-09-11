@@ -1,0 +1,25 @@
+{
+  "name": "0xeenerf",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.8.5"
+  },
+  "dependencies": {
+    "ask-nicely": "^2.0.0-rc1",
+    "color-js": "^1.0.3",
+    "gh-pages": "^1.0.0",
+    "glamor": "^2.20.20",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "node gh-pages.js",
+    "build-and-deploy": "npm run build && npm run deploy"
+  },
+  "homepage": "."
+}
