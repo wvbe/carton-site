@@ -12,6 +12,35 @@ import * as styles from './styles';
 const primaryLogger = api.primaryLogger;
 const secondaryLogger = api.secondaryLogger;
 
+window.addEventListener('hashchange', event => {
+	const hashbang = (window.location.hash || '').trim();
+	const content = hashbang && hashbang.substr(0,3) === '#!/'
+			? hashbang.substr(3,1) === '~'
+				? new Buffer(hashbang.substr(4), 'base64').toString()
+				: hashbang.substr(3)
+			: '';
+
+	api.secondaryLogger.log('Submit "' + content + '"', 'hash');
+	api.submit(content);
+});
+
+window.addEventListener('click', event => {
+	if(event.target.getAttribute('no-capture'))
+		return;
+
+	const command = event.target.getAttribute('data-command'),
+		href = event.target.getAttribute('href');
+
+	if(command) {
+		api.emit('anchor:click:command', command);
+
+		event.preventDefault();
+	}
+	else if(href) {
+		api.emit('anchor:click:href', href);
+	}
+});
+
 api.on('menu-item:click', command => {
 	api.track('navigation', 'menu-item:click', command);
 	api.secondaryLogger.log('Click: ' + command, 'menu');
@@ -104,52 +133,11 @@ function playBootSequence () {
 	}, bootTimeLength);
 }
 
-function  submitFromHash (event) {
-	var hashbang = (window.location.hash || '').trim(),
-		content = hashbang && hashbang.substr(0,3) === '#!/'
-			? hashbang.substr(3,1) === '~'
-			? new Buffer(hashbang.substr(4), 'base64').toString()
-			: hashbang.substr(3)
-			: '';
 
-	api.secondaryLogger.log('Submit "' + content + '"', 'hash');
 
-	api.submit(content);
-}
-
-function submitFromClick (event) {
-	if(event.target.getAttribute('no-capture'))
-		return;
-
-	const command = event.target.getAttribute('data-command'),
-		href = event.target.getAttribute('href');
-
-	if(command) {
-		api.emit('anchor:click:command', command);
-
-		event.preventDefault();
-	}
-	else if(href) {
-		api.emit('anchor:click:href', href);
-	}
-}
-
-export default class RootComponent extends Component {
+export default class App extends Component {
 	componentDidMount () {
-		window.addEventListener('hashchange', submitFromHash);
-		window.addEventListener('click', submitFromClick);
-
 		playBootSequence();
-	}
-
-
-	componentWillUnmount () {
-		window.removeEventListener('hashchange', submitFromHash);
-		window.removeEventListener('click', submitFromClick);
-	}
-
-	shouldComponentUpdate () {
-		return false;
 	}
 
 	render() {

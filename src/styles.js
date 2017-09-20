@@ -21,6 +21,9 @@ export const flex = {
 	alignStart: {
 		alignItems: 'flex-start'
 	},
+	alignCenter: {
+		alignItems: 'center'
+	},
 	justifyEnd: {
 		justifyContent: 'flex-end'
 	},
@@ -34,9 +37,10 @@ export const flex = {
 		// @TODO
 	}
 };
+
 export const padding = {
 	field: {
-		padding: '0 2px'
+		padding: '1em 1em'
 	},
 	button: {
 		padding: '0.25em 0.5em'
@@ -157,6 +161,10 @@ export const theme = {
 	},
 	highlighted: {
 		backgroundColor: palette.fg.blend(bg, 0.8).toString()
+	},
+	inverseDim: {
+		color: palette.bg.toString(),
+		backgroundColor: palette.fg.blend(palette.bg, 0.5).toString()
 	},
 	inverse: {
 		color: palette.bg.toString(),

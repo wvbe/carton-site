@@ -8,6 +8,7 @@ const inlineInputStyle = styles.merge({
 	verticalAlign: 'middle',
 	whiteSpace: 'pre'
 });
+
 const inputStyle = styles.merge(
 	styles.display.block,
 	styles.border.subtle,
@@ -16,6 +17,12 @@ const inputStyle = styles.merge(
 		padding: 1
 	});
 
+const fieldStylesBase = styles.merge(
+	styles.display.flex,
+	styles.flex.horizontal,
+	styles.flex.alignCenter,
+	styles.padding.field);
+
 const formStyles = styles.merge({
 	position: 'absolute',
 	opacity: 0,
@@ -23,6 +30,22 @@ const formStyles = styles.merge({
 	height: 0,
 	overflow: 'hidden'
 });
+
+const textStyle = styles.merge(
+	styles.display.block,
+	styles.flex.fixed
+);
+
+const cursorWidth = styles.length.small * 1.2;
+const cursorHeight = 1.5 * styles.length.line;
+const cursorStyleBase = styles.merge(
+	{
+		minWidth: cursorWidth,
+		height: cursorHeight + 'px',
+		lineHeight:  cursorHeight + 'px',
+		padding: '0 ' + (cursorWidth / 2) + 'px',
+		boxSizing: 'border-box'
+	});
 
 export default class ConsoleInputComponent extends Component {
 	constructor() {
@@ -175,37 +198,48 @@ export default class ConsoleInputComponent extends Component {
 	renderInputRuler () {
 		const spans = [];
 
-		const textStyle = styles.merge(
-			inlineInputStyle,
-			{
-				display: 'inline-block'
-			}),
-			cursorColor = this.state.hasFocus
-				? styles.palette.fg.toString()
-				: this.state.hasHover ? styles.palette.fgDim.toString() : '#ccc',
-			cursorStyle = styles.merge(
-				textStyle,
-				{
-					height: styles.length.line,
-					minWidth: styles.length.small,
-					backgroundColor: cursorColor,
-					border: '1px solid ' + cursorColor,
-					boxSizing: 'border-box',
-					color: styles.palette.bg.toString()
-				});
+		const cursorIsCollapsed = this.state.selectionStart === this.state.selectionEnd;
+		const fieldHasFocus = this.state.hasFocus;
+		const cursorStyle = styles.merge(fieldHasFocus ?
+					cursorIsCollapsed ? styles.theme.inverse : styles.theme.inverseFocused :
+					styles.theme.inverseDim);
+
+		const textFocusColor = fieldHasFocus && !cursorIsCollapsed ? styles.merge(styles.theme.dim) : {};
 
 		if(this.state.selectionStart > 0)
-			spans.push(<span key='pre-cursor' { ...textStyle }>{this.state.input.substring(0, this.state.selectionStart)}</span>);
+			spans.push(
+				<span
+					key='pre-cursor'
+					{ ...inlineInputStyle }
+					{ ...textStyle }
+					{ ...textFocusColor }
+				>
+					{this.state.input.substring(0, this.state.selectionStart)}
+				</span>
+			);
 
 		if (!this.state.busy)
-			spans.push(<oksee-console-input-cursor
-				key='cursor'
-				{ ...cursorStyle }>
-				{this.state.input.substring(this.state.selectionStart, this.state.selectionEnd)}
-			</oksee-console-input-cursor>);
+			spans.push(
+				<oksee-console-input-cursor
+					key='cursor'
+					{ ...inlineInputStyle }
+					{ ...textStyle }
+					{ ...cursorStyleBase }
+					{ ...cursorStyle }>
+					{this.state.input.substring(this.state.selectionStart, this.state.selectionEnd)}
+				</oksee-console-input-cursor>
+			);
 
 		if(this.state.selectionEnd < this.state.input.length)
-			spans.push(<span key='post-cursor' { ...textStyle }>{this.state.input.substring(this.state.selectionEnd)}</span>);
+			spans.push(
+				<span key='post-cursor'
+					{ ...inlineInputStyle }
+					{ ...textStyle }
+					{ ...textFocusColor }
+				>
+					{this.state.input.substring(this.state.selectionEnd)}
+				</span>
+			);
 
 		return spans;
 	}
@@ -214,21 +248,16 @@ export default class ConsoleInputComponent extends Component {
 		let renderedInput = null;
 
 		if (this.state.busy) {
-			renderedInput = <div { ...styles.merge(styles.padding.field) }>{ this.state.busyMessage }</div>;
+			renderedInput = this.state.busyMessage;
 		}
 		else if(this.state.historyInput !== null) {
-			renderedInput = <div { ...styles.merge(styles.padding.field) }>{ this.state.historyInput }</div>;
+			renderedInput = this.state.historyInput;
 		}
 		else {
 			renderedInput = this.renderInputRuler();
 		}
 
-		const fieldStyles = styles.merge(
-			styles.display.block,
-			inlineInputStyle,
-			this.state.input.length ? styles.padding.field : {});
-
-		return (<bzzt
+		return (<div
 			{ ...inputStyle }
 			onClick={this.onClick.bind(this)}
 			onMouseEnter={ this.mouseEnter }
@@ -245,7 +274,9 @@ export default class ConsoleInputComponent extends Component {
 					onFocus={this.handleFocusChange.bind(this, true)}
 				/>
 			</form>
-			<oksee-console-input-field { ...fieldStyles }>{ renderedInput }</oksee-console-input-field>
-		</bzzt>);
+			<div { ...inlineInputStyle } { ...fieldStylesBase }>
+				{ renderedInput }
+			</div>
+		</div>);
 	}
 }
