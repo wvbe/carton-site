@@ -188,7 +188,6 @@ export const overflow = {
 	}
 };
 
-console.log(glamor);
 glamor.insertGlobal('a[data-command], a[href]', Object.assign({
 		textDecoration: 'none',
 		padding: '0 0.3333em'

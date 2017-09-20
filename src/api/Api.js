@@ -98,7 +98,6 @@ export default class Api extends EventEmitter {
 	}
 
 	emit (...args) {
-		console.log('emit', args);
 		super.emit(...args);
 	}
 

@@ -1,16 +1,17 @@
 import Api from './api/Api';
 
-import whoCommand from './command/whoCommand';
-import echoCommand from './command/echoCommand';
-import motdCommand from './command/motdCommand';
-import rootCommand from './command/rootCommand';
-import helpCommand from './command/helpCommand';
-import viewCommand from './command/viewCommand';
-import redirCommand from './command/redirCommand';
-import cvCommand from './command/cvCommand';
-import profileCommand from './command/profileCommand';
-import testCommand from './command/testCommand';
 import colophonCommand from './command/colophonCommand';
+import cvCommand from './command/cvCommand';
+import echoCommand from './command/echoCommand';
+import helpCommand from './command/helpCommand';
+import listCommand from './command/listCommand';
+import motdCommand from './command/motdCommand';
+import profileCommand from './command/profileCommand';
+import redirCommand from './command/redirCommand';
+import rootCommand from './command/rootCommand';
+import testCommand from './command/testCommand';
+import viewCommand from './command/viewCommand';
+import whoCommand from './command/whoCommand';
 
 const api = new Api({
 	isSkewed: false,
@@ -18,17 +19,18 @@ const api = new Api({
 });
 
 [
-	whoCommand,
-	echoCommand,
-	motdCommand,
-	rootCommand,
-	helpCommand,
-	viewCommand,
-	redirCommand,
+	colophonCommand,
 	cvCommand,
+	echoCommand,
+	helpCommand,
+	listCommand,
+	motdCommand,
 	profileCommand,
+	redirCommand,
+	rootCommand,
 	testCommand,
-	colophonCommand
+	viewCommand,
+	whoCommand
 ].forEach(mod => mod(api));
 
 

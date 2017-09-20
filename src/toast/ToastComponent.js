@@ -14,7 +14,6 @@ export default class ToastComponent extends Component {
 	constructor (props) {
 		super();
 
-		console.log(props);
 		this.messages = [...props.messages];
 		this.iterateOverTasks();
 	}

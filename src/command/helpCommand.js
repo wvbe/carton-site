@@ -25,6 +25,14 @@ function getAllOptions (command) {
 function getAllParameters (command) {
 	return getCommandHierarchy(command).reduce((options, command) => options.concat(command.parameters), []);
 }
+
+function getExecutableCommand (command) {
+	return getCommandHierarchy(command)
+		.reverse()
+		.slice(1)
+		.reduce((pieces, command) => pieces.concat([command.name]), [])
+		.join(' ');
+}
 const rowStyle = styles.merge(
 	styles.flex.horizontal);
 const smallColStyle = styles.merge(
@@ -72,11 +80,12 @@ export default (app) => {
 				res.log(``);
 				res.log('## Child commands');
 				command.children.sort(sortByName).forEach(child => {
+					const cmd = getExecutableCommand(child);
 					res.log(<HelpRow
 						small={[
-							<a data-command={ child.name }>{child.name}</a>
+							<a data-command={ cmd }>{ child.name }</a>
 						]}
-						description={ child.description || NO_DESCRIPTION}
+						description={ <p><a data-command={ cmd + ' --help' }>-h</a> { child.description || NO_DESCRIPTION }</p>}
 					/>);
 				});
 			}
@@ -88,7 +97,9 @@ export default (app) => {
 				parameters.forEach(param => {
 					res.log(
 						<HelpRow
-							name={ param.name }
+							small={[
+								param.name
+							]}
 							description={ (param.description || NO_DESCRIPTION) + (param.required ? ' [required]' : '') }
 						/>);
 				});
