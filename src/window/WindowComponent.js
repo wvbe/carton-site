@@ -34,37 +34,34 @@ const headerNameStyles = styles.merge(
 	styles.theme.inverse,
 	styles.padding.field,
 	styles.padding.button);
+
 export default class WindowComponent extends Component {
-	constructor () {
-		super();
-		this.state = {
-			ready: false
-		};
-		this.close = () => {
-			api.emit('window:destroy', this.props.name);
-		}
+	render () {
+		return (
+			<oksee-window { ...windowStyle }>
+				<oksee-window-header { ...headerStyles } { ...rowStyle }>
+					<div { ...headerNameStyles }>{this.props.name}</div>
+					<div { ...styles.merge(styles.flex.fixed) } { ...rowStyle }>
+						<MenuItemComponent onClick={ () => {
+							api.emit('window:destroy', this.props.name);
+						} }>&times;</MenuItemComponent>
+					</div>
+				</oksee-window-header>
+				<oksee-window-content { ...contentStyle } class="fuck-you-scroll">
+					<ToastComponent
+						messages={[
+							'Reserving space in viewport…',
+							'Pushing some pixels…',
+							'Loading window contents…',
+							'Exchanging security codes…',
+							'Wishing Trump was not POTUS…',
+							'Rendering…'
+						]}
+						onFinish={ () => this.props.children }
+					/>
+				</oksee-window-content>
+			</oksee-window>
+		);
 	}
 
-	componentDidMount () {
-		setTimeout(() => this.setState({
-			ready: true
-		}), 1000);
-	}
-	render() {
-		let toast = this.state.ready
-			? null
-			: <ToastComponent message="Loading window..."/>;
-		return (<oksee-window { ...windowStyle }>
-			<oksee-window-header { ...headerStyles } { ...rowStyle }>
-				<div { ...headerNameStyles }>{this.props.name}</div>
-				<div { ...styles.merge(styles.flex.fixed) } { ...rowStyle }>
-					<MenuItemComponent onClick={this.close.bind(this)}>&times;</MenuItemComponent>
-				</div>
-			</oksee-window-header>
-			<oksee-window-content { ...contentStyle } class="fuck-you-scroll">
-				{toast ? toast : null}
-				{!toast ? this.props.children : null }
-			</oksee-window-content>
-		</oksee-window>);
-	}
 }
