@@ -10,8 +10,14 @@ const style = styles.merge(
 	{
 		':hover': styles.theme.inverseFocused
 	});
+
 const busyStyle = styles.merge({
 	textDecoration: 'line-through'
+});
+
+api.on('menu-item:click', command => {
+	api.track('Clicked a menu item', command);
+	api.secondaryLogger.log('Click: ' + command, 'menu');
 });
 export default class MenuItemComponent extends Component {
 	constructor () {
@@ -32,6 +38,8 @@ export default class MenuItemComponent extends Component {
 	handleClick (event) {
 		if(!this.props.onClick && !this.props.input)
 			return;
+
+		api.emit('menu-item:click', this.props.input);
 
 		event.preventDefault();
 

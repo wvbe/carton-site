@@ -3,6 +3,7 @@ import Logger from './Logger';
 import Store from './Store';
 import EventEmitter from '../util/EventEmitter';
 import debounce from '../util/debounce';
+import GoogleAnalytics from 'ga';
 
 function turnIntoMysteriousString (str) {
 	return new Buffer(str)
@@ -37,7 +38,6 @@ const debounced = {
 // window:new - A new window was opened. Two arguments for name and contents resp.
 // window:destroy - A window of given name was closed
 
-
 export default class Api extends EventEmitter {
 	constructor (config) {
 		super();
@@ -53,7 +53,39 @@ export default class Api extends EventEmitter {
 		this.primaryLogger = new Logger();
 		this.secondaryLogger = new Logger();
 
+		this.analytics = new GoogleAnalytics('UA-106346746-1', 'wyb.be');
+
 		this.store.setDefault('history', []);
+
+		this.on('api:submit:success', command => {
+			this.track('Executed a commaned', command);
+		});
+
+		this.on('api:submit:error', (command, error) => {
+			this.track('Encountered an error during a command', command, error.message);
+
+			// @TODO track "api submit-error"
+			// Format a nice error message and print something cool. Errors are, after all, the best features of
+			// this site.
+			let mysteriousString = turnIntoMysteriousString(error.message || error);
+
+			this.primaryLogger.error(error.message || error);
+
+			error.stack && error.stack.split('\n')
+				.slice(1)
+				.forEach(msg => this.primaryLogger.log('    ' + msg.trim()));
+
+			this.primaryLogger.log(mysteriousString, 'Log ID');
+			setTimeout(() => {
+				this.secondaryLogger.log([
+					'Exception',
+					mysteriousString,
+					new Date().toString()
+				].join(' '), `debug`);
+			}, 250);
+
+			debounced.fakeExceptionReport(this.secondaryLogger);
+		});
 	}
 
 	config (name, value) {
@@ -73,6 +105,7 @@ export default class Api extends EventEmitter {
 			return;
 
 		if(this.busyReasons.length) {
+			// @TODO: Track "api submit-busy"
 			this[QUEUE].push(content);
 			return;
 		}
@@ -95,27 +128,11 @@ export default class Api extends EventEmitter {
 		var unsetBusy = this.setBusyReason(`executing: ${content}`);
 
 		this.console.input(content, this.primaryLogger)
-			.catch(e => {
-				// Format a nice error message and print something cool. Errors are, after all, the best features of
-				// this site.
-				let mysteriousString = turnIntoMysteriousString(e.message || e);
-
-				this.primaryLogger.error(e.message || e);
-
-				e.stack && e.stack.split('\n')
-					.slice(1)
-					.forEach(msg => this.primaryLogger.log('    ' + msg.trim()));
-
-				this.primaryLogger.log(mysteriousString, 'Log ID');
-				setTimeout(() => {
-					this.secondaryLogger.log([
-						'Exception',
-						mysteriousString,
-						new Date().toString()
-					].join(' '), `debug`);
-				}, 250);
-
-				debounced.fakeExceptionReport(this.secondaryLogger);
+			.then(() => {
+				this.emit('api:submit:success', content);
+			})
+			.catch(error => {
+				this.emit('api:submit:error', content, error);
 			})
 			.then(() => {
 				unsetBusy();
@@ -135,6 +152,24 @@ export default class Api extends EventEmitter {
 		return () => {
 			this.busyReasons.splice(this.busyReasons.indexOf(reason), 1);
 			this.emit('busy', this.busyReasons);
+		}
+	}
+
+	track (description, label, value) {
+		try {
+			this.analytics.trackEvent({
+				category: 'Behaviour',
+				action: description,
+				label: label,
+				value: value
+			});
+		} catch (error) {
+			if (!this.hasEveryThrownTrackingError) {
+				console.error(error);
+				console.warn('Tracking errors will no longer be logged.');
+				return;
+			}
+			this.hasEveryThrownTrackingError = true;
 		}
 	}
 }

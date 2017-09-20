@@ -12,6 +12,28 @@ import * as styles from './styles';
 const primaryLogger = api.primaryLogger;
 const secondaryLogger = api.secondaryLogger;
 
+api.on('app:click:command', command => {
+	api.track('Clicked a command link', command);
+	api.secondaryLogger.log('Click: ' + command, 'anchor');
+	api.submit(command);
+});
+
+api.on('app:click:href', href => {
+	api.track('Clicked a hyperlink', href);
+	api.secondaryLogger.log('Redir "' + href + '"', 'href');
+	api.submit('redir ' + href);
+});
+api.on('app:init:hasbang', (decoded, hashbang) => {
+	api.track('Opened the app from a deep link', decoded);
+	primaryLogger.log('OK, opening request: ' + hashbang, 'init');
+	api.submit(decoded);
+});
+api.on('app:init:pristine', (decoded, hashbang) => {
+	api.track('Opened the app in a pristine state', decoded);
+	primaryLogger.log('OK, opening default request: #!/motd', 'init');
+	api.submit('motd');
+});
+
 function  submitFromHash (event) {
 	var hashbang = (window.location.hash || '').trim(),
 		content = hashbang && hashbang.substr(0,3) === '#!/'
@@ -33,17 +55,13 @@ function submitFromClick (event) {
 		href = event.target.getAttribute('href');
 
 	if(command) {
-		api.secondaryLogger.log('Submit "' + command + '"', 'mouse');
-		api.submit(command);
+		api.emit('app:click:command', command);
 
 		event.preventDefault();
 	}
-
 	else if(href) {
-		api.secondaryLogger.log('Redir "' + href + '"', 'href');
-		api.submit('redir ' + href);
+		api.emit('app:click:href', href);
 	}
-
 }
 
 const versionNumber = 'v5-rc1';
@@ -87,27 +105,22 @@ function playBootSequence () {
 		// More rubarb
 		secondaryLogger.log('OK', 'init');
 
-		const hashbang = (window.location.hash || '').trim();
+		unsetBusyReason();
 
+		const hashbang = (window.location.hash || '').trim();
 		if(hashbang.length > 3 && hashbang.substr(0,3) === '#!/') {
 			let trimmedHashbang = hashbang.length <= 48
 				? hashbang
 				: (hashbang.substr(0,45) + '...');
 
-			primaryLogger.log('OK, opening request: ' + trimmedHashbang, 'init');
-
-			unsetBusyReason();
-
-			api.submit(hashbang.substr(3, 1) === '~'
+			const decoded = hashbang.substr(3, 1) === '~'
 				? new Buffer(hashbang.substr(4), 'base64').toString()
-				: hashbang.substr(3));
+				: hashbang.substr(3);
+
+			api.emit('app:init:hashbang', decoded, trimmedHashbang);
 		}
 		else {
-			primaryLogger.log('OK, opening default request: #!/motd', 'init');
-
-			unsetBusyReason();
-
-			api.submit('motd');
+			api.emit('app:init:pristine');
 		}
 	}, bootTimeLength);
 }
@@ -115,11 +128,6 @@ function playBootSequence () {
 export default class RootComponent extends Component {
 	constructor () {
 		super();
-
-		this.state = {
-			isSkewed: api.config('isSkewed'),
-			windows: []
-		};
 	}
 
 	componentDidMount () {
@@ -136,7 +144,6 @@ export default class RootComponent extends Component {
 	}
 
 	render() {
-
 		const style = styles.merge(
 			styles.steno.normal,
 			styles.flex.vertical,
