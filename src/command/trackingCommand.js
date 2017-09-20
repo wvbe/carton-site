@@ -2,7 +2,8 @@ import * as AskNicely from 'ask-nicely';
 
 export default function (app) {
 	let profileCommand = app.console
-		.addCommand('profile');
+		.addCommand('tracking')
+		.setDescription('the usage information that is logged for your client');
 
 	profileCommand
 		.addCommand('clear', (req, res) => {

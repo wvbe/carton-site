@@ -1,34 +1,27 @@
+import React from 'react';
+
 export default (app) => {
 
-	(function registerCommand (ask, config) {
+	(function registerCommand (ask, config, ancestry = [config.id]) {
 		const command = ask.addCommand(config.id);
-
 		command.setDescription(config.description);
 		command.setController((req, res) => {
-				res.log('# ' + (config.label || config.id));
+			res.log('# ' + (config.label || config.id));
 
-				(config.items || []).forEach((item, i, all) => res.log(item, (i + 1) + '/' + all.length));
+			(config.items || []).forEach((item, i, all) => res.log(item, (i + 1) + '/' + all.length));
 
-				if (!config.children) {
-					return;
-				}
-
-				if (config.items) {
-					res.log();
-				}
-
-				res.log('# sub lists');
-				config.children.forEach(child => {
-				})
+			(config.children || []).forEach(child => {
+					res.log(<a data-command={ ancestry.concat(child.id).join(' ') }>{ child.id }</a>);
 			});
+		});
 
 		(config.children || []).forEach(child => {
-			registerCommand(command, child);
+			registerCommand(command, child, ancestry.concat(child.id));
 		});
 	})(app.console, {
 		id: 'list',
 		label: 'list',
-		description: 'Lists of stuff and other lists',
+		description: 'lists of stuff and other lists',
 		children: [
 			{
 				id: 'things-i-like',
@@ -44,7 +37,8 @@ export default (app) => {
 				description: 'smart things i say, wether they are true or not',
 				items: [
 					'programmeren is een emotionele aangelegenheid / programming is an emotional occasion',
-					'een mooie vriendin is een vloek en een zegen / a beautiful girlfriend is a blessing and a curse'
+					'een mooie vriendin is een vloek en een zegen / a beautiful girlfriend is a blessing and a curse',
+					'ontspanning is onderdeel van inspanning / to relax is part of an effort'
 				]
 			}
 		]

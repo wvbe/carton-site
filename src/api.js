@@ -6,7 +6,7 @@ import echoCommand from './command/echoCommand';
 import helpCommand from './command/helpCommand';
 import listCommand from './command/listCommand';
 import motdCommand from './command/motdCommand';
-import profileCommand from './command/profileCommand';
+import profileCommand from './command/trackingCommand';
 import redirCommand from './command/redirCommand';
 import rootCommand from './command/rootCommand';
 import testCommand from './command/testCommand';

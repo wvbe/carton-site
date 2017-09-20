@@ -1,7 +1,7 @@
 export default (app) => {
 	app.console
 		.addCommand('motd')
-		.setDescription('The message of the day, an introduction for new visitors.')
+		.setDescription('the message of the day, although it doesn\'t actually change every day')
 		.setController((req, res) => {
 			res.log('Retrieving message of today');
 			return new Promise(resolve => {

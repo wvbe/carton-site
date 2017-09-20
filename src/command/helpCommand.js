@@ -2,7 +2,38 @@ import * as AskNicely from 'ask-nicely';
 import React from 'react';
 import * as styles from '../styles';
 
-const NO_DESCRIPTION = 'No description';
+// Simple table
+const rowStyle = styles.merge(styles.flex.horizontal);
+const largeColStyle = styles.merge(styles.flex.fluid);
+const smallColStyle = styles.merge(styles.flex.fixed, {
+	width: '15%'
+});
+function HelpRow ({ small, description, short }) {
+	return (
+		<div { ...rowStyle }>
+			{ small.map((c, i) => <div key={ i } { ...smallColStyle }>{ c }</div>) }
+			<div { ...largeColStyle }>{ description }</div>
+		</div>
+	)
+}
+
+// Empty descriptions are dimmed
+const noDescriptionMessage = 'No description';
+const noDescriptionStyle = styles.merge(styles.theme.dim);
+function DescriptionData ({ description, label, forceDim }) {
+	return <span>
+		{
+			forceDim || !description ?
+				<span { ...noDescriptionStyle }>{ noDescriptionMessage }</span> :
+				description
+		}
+		{
+			label ?
+				' ' + label :
+				null
+		}
+	</span>
+}
 
 function sortByName(a, b) {
 	return a.name < b.name ? -1 : 1;
@@ -33,24 +64,6 @@ function getExecutableCommand (command) {
 		.reduce((pieces, command) => pieces.concat([command.name]), [])
 		.join(' ');
 }
-const rowStyle = styles.merge(
-	styles.flex.horizontal);
-const smallColStyle = styles.merge(
-	styles.flex.fixed,
-	{
-		width: '15%'
-	});
-const largeColStyle = styles.merge(
-	styles.flex.fluid);
-
-function HelpRow ({ small, description, short }) {
-	return (
-		<div { ...rowStyle }>
-			{ small.map((c, i) => <div key={ i } { ...smallColStyle }>{ c }</div>) }
-			<div { ...largeColStyle }>{ description || NO_DESCRIPTION }</div>
-		</div>
-	)
-}
 
 export default (app) => {
 	app.console
@@ -66,13 +79,16 @@ export default (app) => {
 			let command = req.command,
 				isRoot = !command.parent;
 
-			res.log(`# wyb.be --help`);
+			res.log(`# ${getExecutableCommand(command)} --help`);
 
 			if(isRoot) {
 				res.log('');
 				res.log(`This site is controlled through the terminal you see here. Use the listed commands and options to your advantage. For any command you can find more instructions by using the "--help" flag.`);
 				res.log('');
 				res.log(<div>You can always contact me if you have other questions: type "<a data-command="who --email">who --email</a>"</div>)
+			} else if (command.description) {
+				res.log('');
+				res.log(command.description);
 			}
 
 
@@ -85,7 +101,14 @@ export default (app) => {
 						small={[
 							<a data-command={ cmd }>{ child.name }</a>
 						]}
-						description={ <p><a data-command={ cmd + ' --help' }>-h</a> { child.description || NO_DESCRIPTION }</p>}
+						description={ <span>
+							<a data-command={ cmd + ' --help' }>-h</a>
+							{' '}
+							<DescriptionData
+								description={ child.description }
+								forceDim={ !child.description }
+							/>
+						</span> }
 					/>);
 				});
 			}
@@ -95,13 +118,15 @@ export default (app) => {
 				res.log('');
 				res.log('## Parameters');
 				parameters.forEach(param => {
-					res.log(
-						<HelpRow
-							small={[
-								param.name
-							]}
-							description={ (param.description || NO_DESCRIPTION) + (param.required ? ' [required]' : '') }
-						/>);
+					res.log(<HelpRow
+						small={[
+							param.name
+						]}
+						description={ <DescriptionData
+							description={ param.description }
+							label={ param.required ? '[required]' : null }
+						/> }
+					/>);
 				});
 			}
 
@@ -111,13 +136,15 @@ export default (app) => {
 				res.log('## Options');
 				options.sort(sortByName).forEach(option => {
 					res.log(<HelpRow
-
 						small={[
 							option.short ? `-${option.short}` : '--',
 							'--' + option.name
 						]}
-						description={ (option.description || NO_DESCRIPTION) + (option.required ? ' [required]' : '') }
-						/>);
+						description={ <DescriptionData
+							description={ option.description }
+							label={ option.required ? '[required]' : null }
+						/> }
+					/>);
 				});
 			}
 

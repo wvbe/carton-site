@@ -14,7 +14,7 @@ export default function (app) {
 	app.console
 		.addCommand('cv')
 		.addAlias('resume')
-		.setDescription('curriculum vitae')
+		.setDescription('my online curriculum vitae, resume, work experience et. al.')
 		.setController((req, res) => {
 			res.log('Opening curriculum vitae window');
 			res.log('-------------------------------');
