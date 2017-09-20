@@ -5,6 +5,8 @@ import EventEmitter from '../util/EventEmitter';
 import debounce from '../util/debounce';
 import GoogleAnalytics from 'ga';
 
+const GA_TRACKING_CODE = 'UA-106312619-1';
+
 function turnIntoMysteriousString (str) {
 	return new Buffer(str)
 		.toString('base64')
@@ -53,7 +55,7 @@ export default class Api extends EventEmitter {
 		this.primaryLogger = new Logger();
 		this.secondaryLogger = new Logger();
 
-		this.analytics = new GoogleAnalytics('UA-106346746-1', 'wyb.be');
+		this.analytics = new GoogleAnalytics(GA_TRACKING_CODE, 'wyb.be');
 
 		this.store.setDefault('history', []);
 

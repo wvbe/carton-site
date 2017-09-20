@@ -15,10 +15,6 @@ const busyStyle = styles.merge({
 	textDecoration: 'line-through'
 });
 
-api.on('menu-item:click', command => {
-	api.track('Clicked a menu item', command);
-	api.secondaryLogger.log('Click: ' + command, 'menu');
-});
 export default class MenuItemComponent extends Component {
 	constructor () {
 		super();

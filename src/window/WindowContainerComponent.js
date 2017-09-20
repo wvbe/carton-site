@@ -5,10 +5,6 @@ import WindowComponent from './WindowComponent';
 import DraggableComponent from '../draggable/DraggableComponent';
 var windowIndex = 0;
 
-api.on('window:new:success', name => {
-	api.track('Opened a new window', name);
-	api.secondaryLogger.log('New: ' + name, 'window');
-});
 
 const containerStyle = styles.merge(
 	styles.position.fixed,

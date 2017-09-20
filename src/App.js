@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import MenuComponent from './menu/MenuComponent';
 
+import MenuComponent from './menu/MenuComponent';
 import BigBadAccordeon from './console/BigBadAccordeon';
 import FlagComponent from './components/FlagComponent';
 import ConsoleInputComponent from './console/ConsoleInputComponent';
@@ -12,57 +12,36 @@ import * as styles from './styles';
 const primaryLogger = api.primaryLogger;
 const secondaryLogger = api.secondaryLogger;
 
-api.on('app:click:command', command => {
-	api.track('Clicked a command link', command);
+api.on('menu-item:click', command => {
+	api.track('navigation', 'menu-item:click', command);
+	api.secondaryLogger.log('Click: ' + command, 'menu');
+});
+api.on('window:new:success', name => {
+	api.track('navigation', 'window:new:success', name);
+	api.secondaryLogger.log('New: ' + name, 'window');
+});
+api.on('anchor:click:command', command => {
+	api.track('navigation', 'anchor:click:command', command);
 	api.secondaryLogger.log('Click: ' + command, 'anchor');
 	api.submit(command);
 });
 
-api.on('app:click:href', href => {
-	api.track('Clicked a hyperlink', href);
+api.on('anchor:click:href', href => {
+	api.track('navigation', 'anchor:click:href', href);
 	api.secondaryLogger.log('Redir "' + href + '"', 'href');
 	api.submit('redir ' + href);
 });
 api.on('app:init:hasbang', (decoded, hashbang) => {
+	api.track('entry', 'init:hashbang', decoded);
 	api.track('Opened the app from a deep link', decoded);
 	primaryLogger.log('OK, opening request: ' + hashbang, 'init');
 	api.submit(decoded);
 });
-api.on('app:init:pristine', (decoded, hashbang) => {
-	api.track('Opened the app in a pristine state', decoded);
+api.on('app:init:pristine', () => {
+	api.track('entry', 'init:pristine');
 	primaryLogger.log('OK, opening default request: #!/motd', 'init');
 	api.submit('motd');
 });
-
-function  submitFromHash (event) {
-	var hashbang = (window.location.hash || '').trim(),
-		content = hashbang && hashbang.substr(0,3) === '#!/'
-			? hashbang.substr(3,1) === '~'
-			? new Buffer(hashbang.substr(4), 'base64').toString()
-			: hashbang.substr(3)
-			: '';
-
-	api.secondaryLogger.log('Submit "' + content + '"', 'hash');
-
-	api.submit(content);
-}
-
-function submitFromClick (event) {
-	if(event.target.getAttribute('no-capture'))
-		return;
-
-	let command = event.target.getAttribute('data-command'),
-		href = event.target.getAttribute('href');
-
-	if(command) {
-		api.emit('app:click:command', command);
-
-		event.preventDefault();
-	}
-	else if(href) {
-		api.emit('app:click:href', href);
-	}
-}
 
 const versionNumber = 'v5-rc1';
 function playBootSequence () {
@@ -125,11 +104,37 @@ function playBootSequence () {
 	}, bootTimeLength);
 }
 
-export default class RootComponent extends Component {
-	constructor () {
-		super();
-	}
+function  submitFromHash (event) {
+	var hashbang = (window.location.hash || '').trim(),
+		content = hashbang && hashbang.substr(0,3) === '#!/'
+			? hashbang.substr(3,1) === '~'
+			? new Buffer(hashbang.substr(4), 'base64').toString()
+			: hashbang.substr(3)
+			: '';
 
+	api.secondaryLogger.log('Submit "' + content + '"', 'hash');
+
+	api.submit(content);
+}
+
+function submitFromClick (event) {
+	if(event.target.getAttribute('no-capture'))
+		return;
+
+	const command = event.target.getAttribute('data-command'),
+		href = event.target.getAttribute('href');
+
+	if(command) {
+		api.emit('anchor:click:command', command);
+
+		event.preventDefault();
+	}
+	else if(href) {
+		api.emit('anchor:click:href', href);
+	}
+}
+
+export default class RootComponent extends Component {
 	componentDidMount () {
 		window.addEventListener('hashchange', submitFromHash);
 		window.addEventListener('click', submitFromClick);
@@ -141,6 +146,10 @@ export default class RootComponent extends Component {
 	componentWillUnmount () {
 		window.removeEventListener('hashchange', submitFromHash);
 		window.removeEventListener('click', submitFromClick);
+	}
+
+	shouldComponentUpdate () {
+		return false;
 	}
 
 	render() {
@@ -183,6 +192,6 @@ export default class RootComponent extends Component {
 				/>
 			</div>
 		<WindowContainerComponent />
-</div>);
+	</div>);
 	}
 }
