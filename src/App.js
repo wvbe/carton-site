@@ -60,9 +60,8 @@ api.on('anchor:click:href', href => {
 	api.secondaryLogger.log('Redir "' + href + '"', 'href');
 	api.submit('redir ' + href);
 });
-api.on('app:init:hasbang', (decoded, hashbang) => {
+api.on('app:init:hashbang', (decoded, hashbang) => {
 	api.track('entry', 'init:hashbang', decoded);
-	api.track('Opened the app from a deep link', decoded);
 	primaryLogger.log('OK, opening request: ' + hashbang, 'init');
 	api.submit(decoded);
 });

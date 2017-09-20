@@ -26,21 +26,17 @@ const ghostLineStyle = Object.assign({}, styles.position.absolute,
 		borderTop: '1px dotted ' + styles.palette.fg.toString()
 	});
 
-
-function stopDrag (component, e) {
-	component.lastDragStart = null;
-
-	window.removeEventListener('mouseup', component.onDragStop);
-	window.removeEventListener('mousemove', component.onDragMove);
-
-	component.refs.draggable.addEventListener('mousedown', component.onDragStart);
-
-	component.setState({
-		ghost: false
+const mouseEventFixStyle = styles.merge(
+	styles.position.absolute,
+	{
+		backgroundColor: 'rgba(255,255,255,0.4)',
+		zIndex: 99,
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0
 	});
 
-	e.preventDefault();
-}
 
 function getTransformationForDelta(delta) {
 	return {
@@ -162,6 +158,7 @@ export default class DraggableComponent extends Component {
 			};
 
 			this.setState({
+				wasMoved: false,
 				ghost: {
 					width: (bb.width + 10) + 'px',
 					height: (bb.height + 10) + 'px',
@@ -195,6 +192,7 @@ export default class DraggableComponent extends Component {
 			}
 
 			this.setState({
+				wasMoved: true,
 				x: this.lastDragStart.left + dx,
 				y: this.lastDragStart.top + dy
 			});
@@ -203,7 +201,18 @@ export default class DraggableComponent extends Component {
 		};
 
 		this.onDragStop = (e) => {
-			stopDrag(this, e);
+			this.lastDragStart = null;
+
+			window.removeEventListener('mouseup', this.onDragStop);
+			window.removeEventListener('mousemove', this.onDragMove);
+
+			this.refs.draggable.addEventListener('mousedown', this.onDragStart);
+
+			this.setState({
+				ghost: false
+			});
+
+			e.preventDefault();
 		};
 	}
 
@@ -246,7 +255,9 @@ export default class DraggableComponent extends Component {
 				ref='draggable'
 				{ ...draggableStyle }
 				onMouseDown={this.onDragStart}
-			>{this.props.children}</oksee-draggable>
+			>
+				{ this.state.ghost && this.state.wasMoved ? <div { ...mouseEventFixStyle } /> : null }
+				{this.props.children}</oksee-draggable>
 		</oksee-draggable-wrapper>);
 	}
 }
