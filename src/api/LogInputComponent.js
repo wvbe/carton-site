@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import * as styles from '../styles';
 
@@ -17,12 +16,12 @@ function getClockTime (date) {
 const prefixStyle = styles.merge(
 	styles.flex.fixed,
 	styles.flex.horizontal,
-	{ width: 1.5 * styles.length.gridItem });
-
-
+	{
+		width: 1.5 * styles.length.gridItem
+	});
 
 export default class LogInputComponent extends Component {
-	shouldComponentUpdate (nextProps, nextState) {
+	shouldComponentUpdate () {
 		return false;
 	}
 
@@ -55,11 +54,20 @@ export default class LogInputComponent extends Component {
 
 		return (<oksee-log-message { ...style } data-connotation={this.props.connotation || 'log'}>
 			<oksee-log-prefix { ...prefixStyle }>
-				<div { ...nuggetStyle }>{getClockTime(this.props.time)}</div>
-				<div { ...nuggetStyle }>{this.props.prefix}</div>
+				<div { ...nuggetStyle }>
+					{getClockTime(this.props.time)}
+				</div>
+				<div { ...nuggetStyle }>
+					{this.props.prefix}
+				</div>
 				{/*<div className="arrow" />*/}
 			</oksee-log-prefix>
-			<oksee-log-content { ...nuggetStyle } { ...styles.merge(styles.flex.fluid) }>{this.props.children}</oksee-log-content>
+			<oksee-log-content
+				{ ...nuggetStyle }
+				{ ...styles.merge(styles.flex.fluid) }
+			>
+				{this.props.children}
+			</oksee-log-content>
 		</oksee-log-message>);
 	}
 }
