@@ -4,7 +4,14 @@ import * as styles from '../styles';
 
 function getClockTime (date) {
 	date = date || new Date();
-	return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+	return [
+			date.getHours(),
+			date.getMinutes(),
+			date.getSeconds()
+		]
+		.map(number => String(number))
+		.map(str => (str.length < 2 ? '_'.repeat(2 - str.length) : '') + str)
+		.join(':');
 }
 
 const prefixStyle = styles.merge(
