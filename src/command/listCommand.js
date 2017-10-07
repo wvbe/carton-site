@@ -8,10 +8,12 @@ export default (app) => {
 		command.setController((req, res) => {
 			res.log('# ' + (config.label || config.id));
 
-			(config.items || []).forEach((item, i, all) => res.log(item, (i + 1) + '/' + all.length));
+			(config.items || []).forEach((item, i, all) => {
+				res.log(<p>{'- '}{ item }</p>, (i + 1) + '/' + all.length);
+			});
 
 			(config.children || []).forEach(child => {
-					res.log(<a data-command={ ancestry.concat(child.id).join(' ') }>{ child.id }</a>);
+				res.log(<p>{'> '}<a data-command={ ancestry.concat(child.id).join(' ') }>{ child.id }</a></p>);
 			});
 		});
 
@@ -34,11 +36,22 @@ export default (app) => {
 			},
 			{
 				id: 'smart-things-i-say',
-				description: 'smart things i say, wether they are true or not',
+				description: 'smart things i say, whether they are true or not',
 				items: [
 					'programmeren is een emotionele aangelegenheid / programming is an emotional occasion',
 					'een mooie vriendin is een vloek en een zegen / a beautiful girlfriend is a blessing and a curse',
 					'ontspanning is onderdeel van inspanning / to relax is part of an effort'
+				]
+			},
+			{
+				id: 'bucketlist',
+				description: 'things to do before I die',
+				items: [
+					'see the northpole',
+					'see auralia borealis',
+					'make a million bucks',
+					'jump from a perfectly good airplane',
+					'climb a mountain alone'
 				]
 			}
 		]
