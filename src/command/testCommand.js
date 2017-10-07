@@ -10,7 +10,7 @@ export default function (app) {
 		.addParameter(new AskNicely.Parameter('time')
 			.setDescription('Time, in milliseconds')
 			.setResolver(val => parseInt(val, 10))
-			.setDefault(1000, true))
+			.setDefault(100, true))
 		.setController((req, res) => {
 			res.log(`Timeout (${req.parameters.time} ms)`);
 

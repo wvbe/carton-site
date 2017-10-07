@@ -12,7 +12,8 @@
     "ga": "0.0.2",
     "glamor": "^2.20.20",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "superagent": "^3.6.3"
   },
   "scripts": {
     "start": "react-scripts start",

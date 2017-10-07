@@ -47,8 +47,10 @@ export default (app) => {
 				id: 'bucketlist',
 				description: 'things to do before I die',
 				items: [
+					'go to Mars',
 					'see the northpole',
 					'see auralia borealis',
+					'see auralia borealis on Mars after terraforming',
 					'make a million bucks',
 					'jump from a perfectly good airplane',
 					'climb a mountain alone'

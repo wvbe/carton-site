@@ -162,7 +162,7 @@ export default class App extends Component {
 				<MenuComponent commands={[
 					'motd',
 					'who',
-					'view',
+					'code',
 					'cv',
 					'--help'
 				]} />
