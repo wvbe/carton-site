@@ -19,3 +19,5 @@ And hopefully none too much drunken ramblings that I'll later regret.
 Signed,<br />
 Wybe.
 
+ps. Renamed the file for this entry already, any system utilizing the fact that thsis is source control to the fullest
+should now take that into account for ever. Sorry.
