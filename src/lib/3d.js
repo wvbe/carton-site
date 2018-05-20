@@ -4,5 +4,6 @@ export { default as Space }      from './3d/Space';
 export { default as Coordinate } from './3d/Coordinate';
 
 export { default as LinePath }       from './objects/LinePath';
+export { default as WebSurface }       from './objects/WebSurface';
 export { default as MonochromeBox }  from './objects/MonochromeBox';
 export { default as MonochromeTile } from './objects/MonochromeTile';
