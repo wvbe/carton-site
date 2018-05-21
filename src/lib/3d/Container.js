@@ -1,10 +1,14 @@
 import React from 'react';
 
-const props = {
-	// svg
+const svgAttributes = {
+	// svg and viewbox
 	width: '1px',
 	height: '1px',
+	viewBox: '0 0 1 1',
 	overflow: 'visible',
+
+	// svg rendering
+	shapeRendering: 'geometricPrecision',
 
 	// css
 	style: {
@@ -14,10 +18,4 @@ const props = {
 	}
 };
 
-export default function Container ({ children }) {
-	return (
-		<svg { ...props } shapeRendering={'geometricPrecision '}>
-			{ children }
-		</svg>
-	);
-}
+export default ({ children }) => <svg { ...svgAttributes }>{ children }</svg>;

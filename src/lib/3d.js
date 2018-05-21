@@ -7,3 +7,4 @@ export { default as LinePath }       from './objects/LinePath';
 export { default as WebSurface }       from './objects/WebSurface';
 export { default as MonochromeBox }  from './objects/MonochromeBox';
 export { default as MonochromeTile } from './objects/MonochromeTile';
+export { default as WireframeSea } from './objects/WireframeSea';

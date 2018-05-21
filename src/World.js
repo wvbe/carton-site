@@ -1,7 +1,8 @@
 import React from 'react';
 import color from 'color-js';
 import fromAscii from './world/generators/fromAscii';
-import {Anchor, Container, MonochromeBox, MonochromeTile, WebSurface} from './lib/3d';
+import {Anchor, Container, MonochromeBox, MonochromeTile, WebSurface, WireframeSea} from './lib/3d';
+import FakeNewsFeed from "./ui/FakeNewsFeed";
 
 const ascii = {
     wybe: `
@@ -40,6 +41,9 @@ const ascii = {
 export default function World () {
     return <div style={{ backgroundColor: '#F0CA4D', backgroundImage: 'linear-gradient(90deg, #f0ca4d 25%, #ebc641 25%, #ebc641 50%, #f0ca4d 50%, #f0ca4d 75%, #ebc641 75%, #ebc641 100%)', backgroundSize: '20px 20px', width: '100%', height: '100%' }}>
         <Container>
+            {/*<Anchor y={-30}>*/}
+			    {/*<WireframeSea />*/}
+            {/*</Anchor>*/}
             <Anchor x={-8} y={-38}>
                 <Anchor x={8} y={38} z={0}>
                     { fromAscii(ascii.minnebo, 'x').map(coord => <Anchor key={ coord.toString() } { ...coord }>
@@ -57,9 +61,10 @@ export default function World () {
                     </Anchor>) }
                 </Anchor>
             </Anchor>
-			{/*<WebSurface x={1} y={0} z={1} width={10} height={3}>*/}
-                {/*<h1>Hello</h1>*/}
-			{/*</WebSurface>*/}
+			<WebSurface x={0} y={0} z={1} width={10} height={3}>
+                <div style={{position: 'absolute', bottom: 0 }}><FakeNewsFeed/>
+				</div>
+			</WebSurface>
         </Container>
     </div>
 }
