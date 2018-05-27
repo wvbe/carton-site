@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
 
 // The wrapper for one unit in the console output history
-let allLogKeys = 0;
 class Log extends Component {
-	log = {
-		time: new Date(),
-		key: ++allLogKeys
-	};
 	element = null;
 
 	componentDidMount () {
@@ -34,9 +29,10 @@ class Log extends Component {
 // The list of all logs, errors, etc.
 export default class LogFeed extends Component {
 	state = {
-		historyStart: 0,
-		historyEnd: 0
+		historyId: 0,
+		historyLength: 0
 	};
+	destroyers = [];
 
 	// What has been logged
 	history = [];
@@ -46,25 +42,42 @@ export default class LogFeed extends Component {
 	internalQueue = [];
 	internalTimeout = null;
 
-	_logFromInternalQueue = () => {
-		if(!this.internalQueue.length) {
+	_showNextFromInternalQueue = () => {
+		if(!this.internalQueue.length && !this.history.length) {
 			// Reached the end of queue, clean up
 			clearTimeout(this.internalTimeout);
 			this.internalTimeout = null;
 			return;
 		}
 
+		const now = Date.now();
+		this.history = this.history.filter(item => item.expire > now);
+
 		// Show one more queued item
 		// Replace history, trim if necessary
-		this.history.push(this.internalQueue.shift());
-		const historyStart = Math.max(0, this.history.length - this.props.maxHistory);
+
+		if (this.internalQueue.length) {
+			const newItem = {
+				expire: now + 1000,
+				item: this.internalQueue.shift()
+			};
+			this.history = this.history.concat([newItem]);
+		}
+
 		this.setState({
-			historyStart,
-			historyEnd: this.history.length
+			historyId: this.history.length ?
+				this.history[this.history.length - 1].item.index :
+				this.state.historyId,
+			historyLength: this.history.length
 		});
 
 		// Go again
-		this.internalTimeout = setTimeout(this._logFromInternalQueue, 25);
+		this.internalTimeout = setTimeout(
+			this._showNextFromInternalQueue,
+			this.history.length && !this.internalQueue.length ?
+				this.history.reduce((soonest, item) => Math.min(soonest, item.expire), Infinity)
+				: 25
+		);
 	};
 
 	log = (out) => {
@@ -80,7 +93,7 @@ export default class LogFeed extends Component {
 			return;
 		}
 
-		this.internalTimeout = setTimeout(this._logFromInternalQueue, 25);
+		this.internalTimeout = setTimeout(this._showNextFromInternalQueue, 25);
 	};
 
 	// shouldComponentUpdate (nextProps, nextState) {
@@ -91,20 +104,20 @@ export default class LogFeed extends Component {
 		if (Array.isArray(this.props.initial)) {
 			this.props.initial.forEach(init => this.log(init));
 		}
-		if (this.props.logger) {
-			this.outputDestroyer = this.props.logger.onOutput(this.log);
+		if (this.props.eventEmitter) {
+			this.destroyers.push(this.props.eventEmitter.on('data', this.log));
 		}
 	}
 
 	componentWillUnmount () {
 		// Stop listening to logger calls
-		this.outputDestroyer();
+		this.destroyers.forEach(callback => callback());
 	}
 
 	render() {
 		return (<div>
-			{this.history.slice(this.state.historyStart, this.state.historyEnd).map(log => (
-				<Log key={log.index}>{log.component}</Log>
+			{this.history.map(log => (
+				<Log key={log.item.index}>{log.item.component}</Log>
 			))}
 		</div>);
 	}
