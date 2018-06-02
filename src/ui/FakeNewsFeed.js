@@ -15,9 +15,12 @@ const initial = [
 ];
 
 function generateRandomString (length) {
-	const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
+	const alphabet = '0123456789abcdef';
 	let str = '';
 	for (let i = 0; i < length; i++) {
+		if (i && !(i % 2)) {
+			str += ' ';
+		}
 		str += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
 	}
 
@@ -26,122 +29,19 @@ function generateRandomString (length) {
 
 const continuous = [
 	['', 'sudo rm -rf /'],
-	['', 'tracert'],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
-	['', generateRandomString(6)],
+	['', 'tracert']
 ];
-export default class FakeNewsFeed extends Component {
+// Populate the continuous array with bollocks
+// @TODO: Do better, mix together some git output, fstat stuff, top, pm2, docker, anything
+for (let i = 0; i < 200; i++) {
+	continuous.push(['0x', generateRandomString(8 + Math.floor(Math.random()*2) * 2)]);
+}
 
+export default class FakeNewsFeed extends Component {
 	timeOut = null;
 	continuousLogger = new EventEmitter();
 
 	componentWillMount () {
-
-
 		const derp = () => {
 			const takeABreak = Math.random() < 0.3;
 

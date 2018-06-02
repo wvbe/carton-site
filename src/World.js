@@ -48,8 +48,33 @@ const appStyle = css.merge(
         width: '100%',
         height: '100%'
 	});
+
+const webSurfaceContainerStyle = css.merge({
+	// svg and viewbox
+	width: '1px',
+	height: '1px',
+	overflow: 'visible',
+    position: 'absolute',
+    left: '50%',
+    top: '50%'
+});
+
 export default function World () {
     return <div {...appStyle}>
+        <div {...webSurfaceContainerStyle}>
+            <WebSurface x={-12} y={1} z={2} width={10} axis={'x'}>
+                <div style={{position: 'absolute', bottom: 0, width: '100%', textAlign: 'right' }}>
+                    <p>wybe minnebo<br />application developer<br />and shenanigans</p>
+                    <p>★★★★★</p>
+                    <Button url={'https://github.com/wvbe'}>GitHub</Button>
+                    <Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
+                </div></WebSurface>
+            <WebSurface x={0} y={1} z={2} width={10} height={3}>
+                <div style={{position: 'absolute', bottom: 0 }}>
+                    <FakeNewsFeed/>
+                </div>
+            </WebSurface>
+        </div>
         <Container>
             {/*<Anchor y={-30}>*/}
 			    {/*<WireframeSea />*/}
@@ -71,17 +96,6 @@ export default function World () {
                     </Anchor>) }
                 </Anchor>
             </Anchor>
-            <WebSurface x={-12} y={1} z={2} width={10} axis={'x'}>
-                <div style={{position: 'absolute', bottom: 0, width: '100%', textAlign: 'right' }}>
-                    <p>wybe minnebo<br />application developer</p>
-                    <Button url={'https://github.com/wvbe'} title={'Open my GitHub profile, see my code'}>github</Button>
-                    <Button url={'https://www.linkedin.com/in/wybeminnebo/'} title={'View my LinkedIn profile, get professional details'}>linkedin</Button>
-                </div></WebSurface>
-			<WebSurface x={0} y={1} z={2} width={10} height={3}>
-                <div style={{position: 'absolute', bottom: 0 }}>
-                    <FakeNewsFeed/>
-				</div>
-			</WebSurface>
         </Container>
     </div>
 }

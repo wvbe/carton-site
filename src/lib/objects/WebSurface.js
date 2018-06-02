@@ -21,9 +21,7 @@ export default function WebSurface ({ x = 0, y = 0, z = 0, axis = 'y', width, he
 		top,
 		width: w / scaleX + 'px'
 	});
-	return <foreignObject>
-		<div style={style}>
+	return <div style={style}>
 			{ children }
 		</div>
-	</foreignObject>
 }
