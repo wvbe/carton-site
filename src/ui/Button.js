@@ -9,12 +9,17 @@ export default class Button extends Component {
 			color = 'black',
 			url,
 			children,
+			small = false,
 			title = null
 		} = this.props;
 		const {
 			clicked
 		} = this.state;
-		const style = css.merge(css.steno.header, {
+		const style = css.merge(
+			small ?
+				css.steno.smallHeader :
+				css.steno.header,
+			{
 			border: '1px solid ' + color,
 			borderRadius: '2px',
 			textAlign: 'center',
@@ -24,14 +29,29 @@ export default class Button extends Component {
 			color: color,
 			display: 'block',
 			margin: '5px 0 0 0',
+			padding: small ? '5px 0' : 'none',
+			transition: 'background-color 0.5s',
 			backgroundColor: clicked ? 'rgba(0,0,0,0.1)' : 'transparent',
+			':visited': {
+				backgroundColor: 'rgba(0,0,0,0.1)',
+			},
 			':hover': {
+				transition: 'background-color 0s',
 				backgroundColor: 'rgba(0,0,0,0.75)',
 				border: '1px solid rgba(0,0,0,0.5)',
 				color: 'white'
+			},
+			':first-child': {
+				marginTop: 0
 			}
 		});
-		return <a href={url} target={'_blank'} {...style} onClick={() => this.setState({clicked: true})} title={title}>
+		return <a
+			{...style}
+			href={url}
+		  	target={'_blank'}
+			title={title}
+			onClick={() => this.setState({clicked: true})}
+		>
 			{children}
 		</a>;
 	}

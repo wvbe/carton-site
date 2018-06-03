@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "color-js": "^1.0.4",
+    "fs-extra": "^6.0.1",
     "glamor": "^2.20.40",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -11,7 +12,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build:react": "react-scripts build",
+    "build:xml": "node bin/build-xml.js",
+    "build": "npm run build:react && npm run build:xml",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "gh-pages --dist build",
@@ -19,6 +22,10 @@
   },
   "homepage": ".",
   "devDependencies": {
-    "gh-pages": "^1.1.0"
+    "gh-pages": "^1.1.0",
+    "glob": "^7.1.2",
+    "remark-parse": "^5.0.0",
+    "unified": "^7.0.0",
+    "xml-trident": "^1.0.1-rc1"
   }
 }

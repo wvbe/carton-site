@@ -1,10 +1,17 @@
 import React from 'react';
 import * as css from './style';
 import fromAscii from './world/generators/fromAscii';
-import {Anchor, Container, MonochromeBox, MonochromeTile, WebSurface, WireframeSea} from './lib/3d';
+import {
+	Anchor,
+	Container,
+	MonochromeBox,
+	// MonochromeTile,
+	WebSurface,
+	// WireframeSea
+} from './lib/3d';
 import FakeNewsFeed from "./ui/FakeNewsFeed";
 import Button from "./ui/Button";
-import BoxProgressBar from "./ui/BoxProgressBar";
+// import Progress from "./ui/progress";
 
 const ascii = {
     wybe: `
@@ -21,7 +28,7 @@ const ascii = {
 ###   ###  ##  ###   ## ###   ## ##       ##     ## ##     ##
 #### ####  ##  ####  ## ####  ## ##       ##     ## ##     ##
 ## ### ##  ##  ## ## ## ## ## ## ######   ########  ##     ##
-##     ##  ##  ##  #### ##  #### ##       ##     ## ##     ##
+##  #  ##  ##  ##  #### ##  #### ##       ##     ## ##     ##
 ##     ##  ##  ##   ### ##   ### ##       ##     ## ##     ##
 ##     ## #### ##    ## ##    ## ######## ########   #######
     `,
@@ -61,14 +68,24 @@ const webSurfaceContainerStyle = css.merge({
 
 export default function World () {
     return <div {...appStyle}>
+		{/*<Container>*/}
+			{/*<Anchor x={-30} y={-30}>*/}
+				{/*<WireframeSea width={31} height={31} resolution={2}/>*/}
+			{/*</Anchor>*/}
+		{/*</Container>*/}
         <div {...webSurfaceContainerStyle}>
-            <WebSurface x={-12} y={1} z={2} width={10} axis={'x'}>
-                <div style={{position: 'absolute', bottom: 0, width: '100%', textAlign: 'right' }}>
-                    <p>wybe minnebo<br />application developer<br />and shenanigans</p>
-                    <p>★★★★★</p>
-                    <Button url={'https://github.com/wvbe'}>GitHub</Button>
-                    <Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
-                </div></WebSurface>
+			<WebSurface x={0} y={-11} z={0} width={10} axis={'y'}>
+				<Button url={'resume-of-wybe-minnebo--wyb.be--2018.pdf'} small={true}>curriculum vitae</Button>
+				<Button url={'picture-of-my-cat.jpg'} small={true}>picture of my cat</Button>
+			</WebSurface>
+			<WebSurface x={-12} y={1} z={2} width={10} axis={'x'}>
+				<div style={{position: 'absolute', bottom: 0, width: '100%', textAlign: 'right' }}>
+					<p>wybe minnebo<br />application developer<br />and shenanigans</p>
+					<p>★★★★★</p>
+					<Button url={'https://github.com/wvbe'}>GitHub</Button>
+					<Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
+				</div>
+			</WebSurface>
             <WebSurface x={0} y={1} z={2} width={10} height={3}>
                 <div style={{position: 'absolute', bottom: 0 }}>
                     <FakeNewsFeed/>
@@ -76,26 +93,21 @@ export default function World () {
             </WebSurface>
         </div>
         <Container>
-            {/*<Anchor y={-30}>*/}
-			    {/*<WireframeSea />*/}
-            {/*</Anchor>*/}
-            <Anchor x={-8} y={-38}>
-                <Anchor x={8} y={38} z={0}>
-                    { fromAscii(ascii.minnebo, 'x').map(coord => <Anchor key={ coord.toString() } { ...coord }>
-                        <MonochromeBox fill={css.color('#324D5C')} stroke={'#243742'} innerStroke={'rgba(255, 255, 255,0.3)'} />
-                    </Anchor>) }
-                </Anchor>
-                <Anchor x={8} y={0} z={0}>
-                    { fromAscii(ascii.uxJs, 'x').map(coord => <Anchor key={ coord.toString() } { ...coord }>
-                        <MonochromeBox fill={css.color('#58E0C5')} stroke={'#666'} innerStroke={'rgba(255, 255, 255,1)'} />
-                    </Anchor>) }
-                </Anchor>
-                <Anchor x={0} y={1} z={0}>
-                    { fromAscii(ascii.wybe, 'z').map(coord => <Anchor key={ coord.toString() } { ...coord }>
-                        <MonochromeBox fill={css.color('#324D5C')} stroke={'#243742'} innerStroke={'rgba(255, 255, 255,0.3)'} />
-                    </Anchor>) }
-                </Anchor>
-            </Anchor>
+			<Anchor x={0} y={0} z={0}>
+				{ fromAscii(ascii.minnebo, 'x').map(coord => <Anchor key={ coord.toString() } { ...coord }>
+					<MonochromeBox fill={css.color('#324D5C')} stroke={'#243742'} innerStroke={'rgba(255, 255, 255,0.3)'} />
+				</Anchor>) }
+			</Anchor>
+			<Anchor x={0} y={-38} z={0}>
+				{ fromAscii(ascii.uxJs, 'x').map(coord => <Anchor key={ coord.toString() } { ...coord }>
+					<MonochromeBox fill={css.color('#58E0C5')} stroke={'#666'} innerStroke={'rgba(255, 255, 255,1)'} />
+				</Anchor>) }
+			</Anchor>
+			<Anchor x={-8} y={-38 + 1} z={0}>
+				{ fromAscii(ascii.wybe, 'z').map(coord => <Anchor key={ coord.toString() } { ...coord }>
+					<MonochromeBox fill={css.color('#324D5C')} stroke={'#243742'} innerStroke={'rgba(255, 255, 255,0.3)'} />
+				</Anchor>) }
+			</Anchor>
         </Container>
     </div>
 }

@@ -57,7 +57,7 @@ export default class FakeNewsFeed extends Component {
 			}, takeABreak ? 2000 + Math.random() * 10000 : 200 + Math.random() * 1000);
 		};
 
-		derp();
+		setTimeout(derp, 2000);
 	}
 
 	componentWillUnmount () {

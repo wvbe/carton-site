@@ -1,6 +1,4 @@
 import colorJs from 'color-js';
-import * as glamor from 'glamor';
-
 
 export { merge } from 'glamor';
 
