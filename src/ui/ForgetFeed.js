@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import events from '../events';
+
 // The wrapper for one unit in the console output history
 class Log extends Component {
 	element = null;
@@ -104,8 +106,8 @@ export default class LogFeed extends Component {
 		if (Array.isArray(this.props.initial)) {
 			this.props.initial.forEach(init => this.log(init));
 		}
-		if (this.props.eventEmitter) {
-			this.destroyers.push(this.props.eventEmitter.on('data', this.log));
+		if (this.props.eventName) {
+			this.destroyers.push(events.on(this.props.eventName, this.log));
 		}
 	}
 

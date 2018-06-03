@@ -57,7 +57,7 @@ export class Progress extends Component {
 }
 
 export function ProgressBoxBar ({ lights, layers = Infinity, progress }) {
-	return lights.map((light,i) => <Anchor key={i} y={ i % (layers || Infinity)} z={-Math.floor(i / (layers||Infinity))}>{
+	return lights.map((light, i) => <Anchor key={i} y={ i % (layers || Infinity)} z={-Math.floor(i / (layers||Infinity))}>{
 		progress < (i + 1) / lights.length ?
 			null :
 			<MonochromeBox/>

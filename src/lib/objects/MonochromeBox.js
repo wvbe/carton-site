@@ -47,32 +47,35 @@ let XY_NODES = coordsToPixels([
 ]);
 
 export default function MonochromeBox ({
-   label = null,
-   stroke = 'black',
-   innerStroke = null,
    fill = color('gray'),
+
+   strokeLinecap = 'round',
+
+   stroke = fill.darkenByRatio(0.3).saturateByRatio(0.3),
    strokeWidth = 1,
-   strokeLinecap = 'round'
+
+   innerStroke = fill.lightenByRatio(0.4).desaturateByRatio(0.8),
+   innerStrokeWidth = strokeWidth,
 }) {
+	const innerStrokeCss = innerStroke && innerStroke.toCSS();
+	const strokeCss = stroke && stroke.toCSS();
+
 	return [
 		fill && <polygon
 			key={'xz'}
 			points={XZ_NODES.map(c => c.join(',')).join(' ')}
-			stroke={stroke}
 			fill={fill.toCSS()}
 			strokeWidth={0}
 		/>,
 		fill && <polygon
 			key={'xy'}
 			points={XY_NODES.map(c => c.join(',')).join(' ')}
-			stroke={stroke}
 			fill={fill.lightenByRatio(0.2).toCSS()}
 			strokeWidth={0}
 		/>,
 		fill && <polygon
 			key={'yz'}
 			points={YZ_NODES.map(c => c.join(',')).join(' ')}
-			stroke={stroke}
 			fill={fill.darkenByRatio(0.2).toCSS()}
 			strokeWidth={0}
 		/>,
@@ -82,8 +85,8 @@ export default function MonochromeBox ({
 			y1={COORDINATE_CLOSEST_TO_CAMERA[1]}
 			x2={BORDER_NODES[3][0]}
 			y2={BORDER_NODES[3][1]}
-			stroke={innerStroke}
-			strokeWidth={strokeWidth}
+			stroke={innerStrokeCss}
+			strokeWidth={innerStrokeWidth}
 			strokeLinecap={strokeLinecap}
 		/>,
 		innerStroke && <line
@@ -92,8 +95,8 @@ export default function MonochromeBox ({
 			y1={COORDINATE_CLOSEST_TO_CAMERA[1]}
 			x2={BORDER_NODES[1][0]}
 			y2={BORDER_NODES[1][1]}
-			stroke={innerStroke}
-			strokeWidth={strokeWidth}
+			stroke={innerStrokeCss}
+			strokeWidth={innerStrokeWidth}
 			strokeLinecap={strokeLinecap}
 		/>,
 		innerStroke && <line
@@ -102,23 +105,18 @@ export default function MonochromeBox ({
 			y1={COORDINATE_CLOSEST_TO_CAMERA[1]}
 			x2={BORDER_NODES[5][0]}
 			y2={BORDER_NODES[5][1]}
-			stroke={innerStroke}
-			strokeWidth={strokeWidth}
+			stroke={innerStrokeCss}
+			strokeWidth={innerStrokeWidth}
 			strokeLinecap={strokeLinecap}
 		/>,
 		// Rendering lines separately so that the ouline doesn't look funky. strokeLinecap appears to have no effect
 		<polygon
 			key={'outline'}
 			points={BORDER_NODES.map(c => c.join(',')).join(' ')}
-			stroke={stroke}
+			stroke={strokeCss}
 			fill={'transparent'}
 			strokeWidth={strokeWidth}
 			strokeLinecap={strokeLinecap}
-		/>,
-		label && <text key={'label'}
-			  textAnchor={'middle'}
-			  x={COORDINATE_CLOSEST_TO_CAMERA[0]}
-			  y={COORDINATE_CLOSEST_TO_CAMERA[1] + 3}
-		>{label}</text>
+		/>
 	];
 }

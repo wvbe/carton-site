@@ -9,6 +9,16 @@ const yAxisWebSurface = {
 	transform: 'skewY(-30deg) scaleX(' + scaleX + ')',
 	transformOrigin: 'top left'
 };
+const bottomIsToTheLeft = false;
+const zAxisWebSurface = bottomIsToTheLeft ? {
+	position: 'absolute',
+	transform: 'rotate(30deg) skewX(-30deg) scaleX(' + scaleX + ')',
+	transformOrigin: 'bottom left'
+} : {
+	position: 'absolute',
+	transform: 'rotate(-30deg) skewX(30deg) scaleX(' + scaleX + ')',
+	transformOrigin: 'top left'
+};
 
 const xAxisWebSurface = {
 	position: 'absolute',
@@ -20,7 +30,7 @@ export default function WebSurface ({ x = 0, y = 0, z = 0, axis = 'y', width, he
 	const [left, top] = perspective.toPixels(...[x, y, z]);
 	const [pixelWidth] = perspective.toPixels(0, width, height);
 	const style = Object.assign({},
-		axis === 'y' ? yAxisWebSurface : xAxisWebSurface,
+		axis === 'y' ? yAxisWebSurface : axis === 'x' ? xAxisWebSurface : zAxisWebSurface,
 		{
 			left,
 			top,

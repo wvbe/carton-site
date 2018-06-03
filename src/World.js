@@ -1,49 +1,16 @@
 import React from 'react';
 import * as css from './style';
-import fromAscii from './world/generators/fromAscii';
 import {
 	Anchor,
-	Container,
-	MonochromeBox,
-	// MonochromeTile,
-	WebSurface,
-	// WireframeSea
+	Container as SvgContainer,
+	WebSurface
 } from './lib/3d';
-import FakeNewsFeed from "./ui/FakeNewsFeed";
-import Button from "./ui/Button";
-// import Progress from "./ui/progress";
 
-const ascii = {
-    wybe: `
-##      ## ##    ## ########  ########
-##  ##  ##  ##  ##  ##     ## ##
-##  ##  ##   ####   ##     ## ##
-##  ##  ##    ##    ########  ######
-##  ##  ##    ##    ##     ## ##
-##  ##  ##    ##    ##     ## ##
- ###  ###     ##    ########  ########
-    `,
-    minnebo: `
-##     ## #### ##    ## ##    ## ######## ########   #######
-###   ###  ##  ###   ## ###   ## ##       ##     ## ##     ##
-#### ####  ##  ####  ## ####  ## ##       ##     ## ##     ##
-## ### ##  ##  ## ## ## ## ## ## ######   ########  ##     ##
-##  #  ##  ##  ##  #### ##  #### ##       ##     ## ##     ##
-##     ##  ##  ##   ### ##   ### ##       ##     ## ##     ##
-##     ## #### ##    ## ##    ## ######## ########   #######
-    `,
-    uxJs: `
-#   # #   #       ####  ###
-#   # #   #          # #   #
-#   #  # #    #      # # 
-#   #   #    ###     #  ###
-#   #  # #    #   #  #     #
-#  ## #   #       #  # #   #
- ## # #   #        ##   ###
-    `,
-    arrow: `
-`
-};
+import ForgetFeed from './ui/ForgetFeed';
+import Button from './ui/Button';
+
+import startFakeNews from './animations/startFakeNews';
+import HomepageAsciiArt from './world/HomepageAsciiArt';
 
 // Colors: https://color.adobe.com/nl/Copy-of-Flat-Design-color-theme-10773248/edit/?copy=true&base=1&rule=Custom&selected=1&name=Kopie%20van%20Copy%20of%20Flat%20Design&mode=hsv&rgbvalues=0.89,0.4841600000000777,0.24920000000000003,0.3432,0.88,0.7726400000000976,0.87,0.35510499999980555,0.28709999999999997,0.198,0.3005999999999803,0.36,0.94,0.7908533333331782,0.30079999999999996&swatchOrder=0,1,2,3,4
 const appStyle = css.merge(
@@ -56,16 +23,35 @@ const appStyle = css.merge(
         height: '100%'
 	});
 
-const webSurfaceContainerStyle = css.merge({
-	// svg and viewbox
-	width: '1px',
-	height: '1px',
-	overflow: 'visible',
-    position: 'absolute',
-    left: '50%',
-    top: '50%'
-});
+const initialFakeNews = [
+	['init', 'Connected to http://wyb.be, welcome ANON'],
+	['ws', '0x://websocket'],
+	['http', '101 Switching Protocols'],
+	['ws', 'Upgrade (websocket)'],
+	['', 'permessage-deflate; client_max_window_bits'],
+	['', 'MeIy8A1qAhcqufFKmIr/qw=='],
+	['', 'aLE6oM0LDpu0+YGAiEbKf4Qnx98='],
+	['usr', 'ANON user (wyb.be v1000)'],
+	['usr', 'Loading profile'],
+	['usr', navigator.userAgent]
+];
+setTimeout(() => {
+	startFakeNews('fake-news')
+}, 2000);
 
+function HtmlContainer ({ children }) {
+	return <div {...css.merge({
+		// svg and viewbox
+		width: '1px',
+		height: '1px',
+		overflow: 'visible',
+		position: 'absolute',
+		left: '50%',
+		top: '50%'
+	})}>
+		{ children }
+	</div>;
+}
 export default function World () {
     return <div {...appStyle}>
 		{/*<Container>*/}
@@ -73,7 +59,7 @@ export default function World () {
 				{/*<WireframeSea width={31} height={31} resolution={2}/>*/}
 			{/*</Anchor>*/}
 		{/*</Container>*/}
-        <div {...webSurfaceContainerStyle}>
+		<HtmlContainer>
 			<WebSurface x={0} y={-11} z={0} width={10} axis={'y'}>
 				<Button url={'resume-of-wybe-minnebo--wyb.be--2018.pdf'} small={true}>curriculum vitae</Button>
 				<Button url={'picture-of-my-cat.jpg'} small={true}>picture of my cat</Button>
@@ -86,28 +72,14 @@ export default function World () {
 					<Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
 				</div>
 			</WebSurface>
-            <WebSurface x={0} y={1} z={2} width={10} height={3}>
-                <div style={{position: 'absolute', bottom: 0 }}>
-                    <FakeNewsFeed/>
-                </div>
-            </WebSurface>
-        </div>
-        <Container>
-			<Anchor x={0} y={0} z={0}>
-				{ fromAscii(ascii.minnebo, 'x').map(coord => <Anchor key={ coord.toString() } { ...coord }>
-					<MonochromeBox fill={css.color('#324D5C')} stroke={'#243742'} innerStroke={'rgba(255, 255, 255,0.3)'} />
-				</Anchor>) }
-			</Anchor>
-			<Anchor x={0} y={-38} z={0}>
-				{ fromAscii(ascii.uxJs, 'x').map(coord => <Anchor key={ coord.toString() } { ...coord }>
-					<MonochromeBox fill={css.color('#58E0C5')} stroke={'#666'} innerStroke={'rgba(255, 255, 255,1)'} />
-				</Anchor>) }
-			</Anchor>
-			<Anchor x={-8} y={-38 + 1} z={0}>
-				{ fromAscii(ascii.wybe, 'z').map(coord => <Anchor key={ coord.toString() } { ...coord }>
-					<MonochromeBox fill={css.color('#324D5C')} stroke={'#243742'} innerStroke={'rgba(255, 255, 255,0.3)'} />
-				</Anchor>) }
-			</Anchor>
-        </Container>
+			<WebSurface x={0} y={1} z={2} width={10} height={3}>
+				<div style={{position: 'absolute', bottom: 0 }}>
+					<ForgetFeed initial={initialFakeNews} eventName={'fake-news'} />
+				</div>
+			</WebSurface>
+		</HtmlContainer>
+        <SvgContainer>
+			<HomepageAsciiArt />
+        </SvgContainer>
     </div>
 }
