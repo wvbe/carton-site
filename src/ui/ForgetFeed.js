@@ -45,13 +45,6 @@ export default class LogFeed extends Component {
 	internalTimeout = null;
 
 	_showNextFromInternalQueue = () => {
-		if(!this.internalQueue.length && !this.history.length) {
-			// Reached the end of queue, clean up
-			clearTimeout(this.internalTimeout);
-			this.internalTimeout = null;
-			return;
-		}
-
 		const now = Date.now();
 		this.history = this.history.filter(item => item.expire > now);
 
@@ -74,11 +67,25 @@ export default class LogFeed extends Component {
 		});
 
 		// Go again
+		let timeoutLength = Infinity;
+		if (this.internalQueue.length) {
+			// if there's more messages coming
+			timeoutLength = 50;
+		}
+		else if (this.history.length) {
+			// if nothing new is queued up, measure the timeout to the first expiring history item
+			timeoutLength = this.history.reduce((soonest, item) => Math.min(soonest, item.expire), Infinity) - now;
+		}
+		else {
+			// Reached the end of queue, clean up
+			clearTimeout(this.internalTimeout);
+			this.internalTimeout = null;
+			return;
+		}
+
 		this.internalTimeout = setTimeout(
 			this._showNextFromInternalQueue,
-			this.history.length && !this.internalQueue.length ?
-				this.history.reduce((soonest, item) => Math.min(soonest, item.expire), Infinity)
-				: 25
+			timeoutLength
 		);
 	};
 

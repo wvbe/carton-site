@@ -17,6 +17,8 @@ function createPerspective (degrees, tileSize) {
 	const tileHeight = tileSize;
 
 	return {
+		degrees: degrees,
+		radians: degrees * (Math.PI / 180),
 		tileSize: tileSize,
 		toPixels: (x, y, z) => {
 			const cartX = (x + y) * _isometricCos,

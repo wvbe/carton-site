@@ -6,6 +6,7 @@ import {
 	WebSurface
 } from './lib/3d';
 
+import FillerSurface from './ui/FillerSurface';
 import ForgetFeed from './ui/ForgetFeed';
 import Button from './ui/Button';
 
@@ -20,7 +21,8 @@ const appStyle = css.merge(
         backgroundImage: 'linear-gradient(90deg, #f0ca4d 25%, #ebc641 25%, #ebc641 50%, #f0ca4d 50%, #f0ca4d 75%, #ebc641 75%, #ebc641 100%)',
         backgroundSize: '20px 20px',
         width: '100%',
-        height: '100%'
+        height: '100%',
+		display: 'flex'
 	});
 
 const initialFakeNews = [
@@ -33,7 +35,7 @@ const initialFakeNews = [
 	['', 'aLE6oM0LDpu0+YGAiEbKf4Qnx98='],
 	['usr', 'ANON user (wyb.be v1000)'],
 	['usr', 'Loading profile'],
-	['usr', navigator.userAgent]
+	// ['usr', navigator.userAgent]
 ];
 setTimeout(() => {
 	startFakeNews('fake-news')
@@ -64,16 +66,21 @@ export default function World () {
 				<Button url={'resume-of-wybe-minnebo--wyb.be--2018.pdf'} small={true}>curriculum vitae</Button>
 				<Button url={'picture-of-my-cat.jpg'} small={true}>picture of my cat</Button>
 			</WebSurface>
+			<WebSurface x={-13} y={-4} z={2} width={10} axis={'y'}>
+				<div style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', textAlign: 'right' }}>
+					<FillerSurface width={'50px'} height={'50px'} />
+				</div>
+			</WebSurface>
 			<WebSurface x={-12} y={1} z={2} width={10} axis={'x'}>
-				<div style={{position: 'absolute', bottom: 0, width: '100%', textAlign: 'right' }}>
+				<div style={{ position: 'absolute', bottom: 0, width: '100%', textAlign: 'right' }}>
 					<p>wybe minnebo<br />application developer<br />and shenanigans</p>
 					<p>★★★★★</p>
 					<Button url={'https://github.com/wvbe'}>GitHub</Button>
 					<Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
 				</div>
 			</WebSurface>
-			<WebSurface x={0} y={1} z={2} width={10} height={3}>
-				<div style={{position: 'absolute', bottom: 0 }}>
+			<WebSurface x={0} y={1} z={2} width={25}>
+				<div style={{position: 'absolute', bottom: 0, width: '100%' }}>
 					<ForgetFeed initial={initialFakeNews} eventName={'fake-news'} />
 				</div>
 			</WebSurface>

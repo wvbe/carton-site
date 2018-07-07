@@ -37,6 +37,7 @@ export const flex = {
         flex: '0 0 auto'
     }
 };
+
 export const display = {
     block: {
         display: 'block'
@@ -45,12 +46,19 @@ export const display = {
         display: 'inline-block'
     }
 };
+
 export const position = {
     relative: { position: 'relative' },
     fixed: { position: 'fixed' },
     absolute: { position: 'absolute' }
 };
 
+export const border = {
+    harsh: {
+		border: '1px solid black',
+		borderRadius: '2px',
+    }
+};
 
 const fg = color('#666666'),
     bg = color('#eeeeee');
@@ -83,7 +91,10 @@ export const steno = {
 		lineHeight: '30px',
 		fontWeight: 'bold'
     },
-    script: {
+    clickable: {
+		textDecoration: 'none',
+		cursor: 'pointer',
+		color: 'black'
     }
 };
 
