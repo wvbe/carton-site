@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import events from "../events";
 
 // The wrapper for one unit in the console output history
 let allLogKeys = 0;
@@ -46,6 +47,7 @@ export default class LogFeed extends Component {
 	internalQueue = [];
 	internalTimeout = null;
 
+	destroyers = [];
 	_logFromInternalQueue = () => {
 		if(!this.internalQueue.length) {
 			// Reached the end of queue, clean up
@@ -91,14 +93,14 @@ export default class LogFeed extends Component {
 		if (Array.isArray(this.props.initial)) {
 			this.props.initial.forEach(init => this.log(init));
 		}
-		if (this.props.logger) {
-			this.outputDestroyer = this.props.logger.onOutput(this.log);
+		if (this.props.eventName) {
+			this.destroyers.push(events.on(this.props.eventName, this.log));
 		}
 	}
 
 	componentWillUnmount () {
 		// Stop listening to logger calls
-		this.outputDestroyer();
+		this.destroyers.forEach(callback => callback());
 	}
 
 	render() {

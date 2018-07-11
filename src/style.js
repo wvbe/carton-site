@@ -21,9 +21,12 @@ export const flex = {
     spaceBetween: {
         justifyContent: 'space-between'
     },
-    alignStart: {
-        alignItems: 'flex-start'
-    },
+	alignStart: {
+		alignItems: 'flex-start'
+	},
+	alignEnd: {
+		alignItems: 'flex-start'
+	},
     alignCenter: {
         alignItems: 'center'
     },
@@ -50,7 +53,14 @@ export const display = {
 export const position = {
     relative: { position: 'relative' },
     fixed: { position: 'fixed' },
-    absolute: { position: 'absolute' }
+    absolute: { position: 'absolute' },
+
+    absoluteCenter: {
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)'
+    }
 };
 
 export const border = {

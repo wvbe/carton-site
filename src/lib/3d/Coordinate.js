@@ -26,6 +26,10 @@ module.exports = class Coordinate {
 		return this;
 	}
 
+	manhattanDistanceTo (coord) {
+		return Math.abs(this.x - coord.x) + Math.abs(this.y - coord.y);// + Math.abs(this.z - coord.z);
+	}
+
 	// For debugging purposes only, may change without notice or tests
 	toString () {
 		return [this.x, this.y, this.z].join(',');

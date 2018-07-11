@@ -1,24 +1,20 @@
 import React, {Component} from 'react';
 import * as css from '../style';
-export default class Button extends Component {
-	state = {
-		clicked: false
-	};
-	render () {
-		const {
-			width = '100%',
-			height = '100%',
-			children
-		} = this.props;
-
+export default function FillerSurface ({
+   width = '100%',
+   height = '100%',
+	hasBackground = true,
+   children
+}) {
 		const lineWidth = 1;
 
 		const style = css.merge(
 			css.border.harsh,
+			css.position.relative,
 			{
 				width,
 				height,
-				background: '' +
+				background: hasBackground ?
 					'       linear-gradient(to top left,\n' +
 					'           rgba(0,0,0,0) 0%,\n' +
 					'           rgba(0,0,0,0) calc(50% - ' + lineWidth + 'px),\n' +
@@ -30,10 +26,10 @@ export default class Button extends Component {
 					'           rgba(0,0,0,0) calc(50% - ' + lineWidth + 'px),\n' +
 					'           rgba(0,0,0,1) 50%,\n' +
 					'           rgba(0,0,0,0) calc(50% + ' + lineWidth + 'px),\n' +
-					'           rgba(0,0,0,0) 100%)'
+					'           rgba(0,0,0,0) 100%)' :
+					null
 			});
 		return <div {...style}>
 			{children}
 		</div>;
-	}
 }

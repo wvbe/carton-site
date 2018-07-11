@@ -77,67 +77,91 @@ function DrawHeightGrid ({ width, height, zValues, resolution = 4, strokeWidth, 
 
 }
 
-function DrawPoints ({ coords, resolution = 4, strokeWidth, stroke }) {
+function DrawPoints ({ coords, resolution = 4, zLineStroke,zLineStrokeWidth=0,zDotRadius = 0, zDotFill = null }) {
 	return coords.map(coord => {
 		const start = perspective.toPixels(coord.x * resolution, coord.y * resolution, coord.z);
 		const end = perspective.toPixels(coord.x * resolution, coord.y * resolution, 0);
 
-		return <line
-			key={coord.x + ',' + coord.y}
-			x1={start[0]}
-			y1={start[1]}
-			x2={end[0]}
-			y2={end[1]}
-			stroke={stroke}
-			strokeWidth={strokeWidth}
-		/>
-		// return <circle key={coord.x + ',' + coord.y} cx={coords[0]} cy={ coords[1]} r={'3'} fill={'blue'} />
+		return [
+			zLineStrokeWidth && <line
+				key={coord.x + ',' + coord.y+'-line'}
+				x1={start[0]}
+				y1={start[1]}
+				x2={end[0]}
+				y2={end[1]}
+				stroke={zLineStroke}
+				strokeWidth={zLineStrokeWidth}
+			/>,
+			zDotFill && <circle
+				key={coord.x + ',' + coord.y}
+				cx={start[0]}
+				cy={ start[1]}
+				r={zDotRadius}
+				fill={zDotFill} />
+			];
 	});
 }
 
 export default function MonochromeTile ({
-	width = 10,
-	height = 10,
-	resolution = 4,
+	width = 50,
+	height = 50,
+	resolution = 2,
 	zStroke = 'rgba(0, 0, 0, 0.5)',
 	zStrokeWidth = 1,
-	flatGridStroke = 'rgba(0, 0, 0, 0.1)',
-	flatGridStrokeWidth = 1,
-	gridStroke = 'rgba(0, 0, 0, 0.2)',
+	zLineStroke = 'rgba(0, 0, 0, 0.3)',
+	zLineStrokeWidth = 0.25,
+	flatGridStroke = 'rgba(0, 0, 0, 0.3)',
+	flatGridStrokeWidth = 0.5,
+	gridStroke = 'rgba(0, 0, 0, 0.5)',
 	gridStrokeWidth = 1,
-	circleFill = 'rgba(0,0,0,0.5)',
-	circleRadius = 2,
-	maxZ = 0.25 * resolution
+	zDotFill = 'rgba(0,0,0,1)',
+	zDotRadius = 2,
+	maxZ = 1,
+	smoothingIterations = 7,
+	smoothingForce = 0.9,
+	maxZCutoff = Infinity,
+	minZCutoff = -Infinity
 }) {
-	const coords = arrayOfLength(width).reduce((all, x) => all.concat(arrayOfLength(height).map(y => new Coordinate(
-		x,
-		y,
-		Math.random() * maxZ
-	))), []);
+	const coords = Array.from(Array(smoothingIterations)).reduce(
+		(lastNerf, n, i) => lastNerf.map(coord => {
+			const neighbourAverageZ = lastNerf
+				.filter(c => coord.manhattanDistanceTo(c) <=4.3 && !c.equals(coord))
+				.reduce((total, coord, i, all) => i === all.length - 1 ? (total + coord.z)/all.length : total + coord.z, 0);
+			return new Coordinate(coord.x, coord.y, (1-smoothingForce) * coord.z + smoothingForce * neighbourAverageZ);
+		}),
+		arrayOfLength(width).reduce((all, x) => all.concat(
+			arrayOfLength(height).map(y => new Coordinate(x, y, Math.pow(Math.pow(Math.random() * 1.2, 3) * 1.1, 9) * maxZ	))
+		), []))
+		.map(c => new Coordinate(c.x, c.y, Math.min(Math.max(c.z, minZCutoff), maxZCutoff)));
 
+	const avgZ = coords.reduce((total, coord, i, all) => i === all.length - 1 ? (total + coord.z)/all.length : total + coord.z, 0);
 	return <Anchor>
-		<DrawFlatGrid
+		<Anchor><DrawFlatGrid
 			width={width}
 			height={height}
 			resolution={resolution}
 			stroke={flatGridStroke}
 			strokeWidth={flatGridStrokeWidth}
-		/>
-		<DrawPoints
-			width={width}
-			height={height}
-			resolution={resolution}
-			stroke={flatGridStroke}
-			strokeWidth={flatGridStrokeWidth}
-			coords={coords}
-		/>
-		<DrawHeightGrid
+		/></Anchor>
+
+		<g><DrawHeightGrid
 			width={width}
 			height={height}
 			resolution={resolution}
 			stroke={gridStroke}
 			strokeWidth={gridStrokeWidth}
-			zValues={coords.map(coord => coord.z)}
-		/>
+			zValues={coords.map(coord => coord.z-avgZ)}
+		/></g>
+		<Anchor><DrawPoints
+			width={width}
+			height={height}
+			resolution={resolution}
+			zLineStroke={zLineStroke}
+			zLineStrokeWidth={zLineStrokeWidth}
+			zDotFill={zDotFill}
+			zDotRadius={zDotRadius}
+			coords={coords.map(c => c.clone().transform(0,0,-avgZ))}
+		/></Anchor>
+
 	</Anchor>;
 }
