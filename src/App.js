@@ -26,15 +26,12 @@ setTimeout(() => {
 let i = 0;
 const tickerMessages = [
 	'critical error',
-	'bad authentication',
-	'critical error',
-	'bad authentication',
-	'critical error',
-	'bad authentication',
-	'critical error',
-	'abandon all hope'
+	'unknown reference:  0x02',
+	'forgotten null checks:  0x05',
+	'syntax errors: 0x0C',
+	'tachyonic paradox: 0x00'
 ];
-setInterval(() => events.emit('ticker', tickerMessages[i++ % tickerMessages.length]), 3000);
+setInterval(() => events.emit('ticker', tickerMessages[i++ % tickerMessages.length]), 1500);
 
 export default function App () {
     return <World

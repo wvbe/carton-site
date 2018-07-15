@@ -18,4 +18,6 @@ const svgAttributes = {
 	}
 };
 
-export default ({ children }) => <svg { ...svgAttributes }>{ children }</svg>;
+export default function SvgContainer ({ children }) {
+	return <svg { ...svgAttributes }>{ children }</svg>;
+};

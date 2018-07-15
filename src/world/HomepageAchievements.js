@@ -5,6 +5,7 @@ import {
 } from '../lib/3d';
 import FillerSurface from '../ui/FillerSurface';
 import LogFeed from "../ui/LogFeed";
+import HomepageAchievementColumn from "./HomepageAchievementColumn";
 
 
 const style = css.merge(
@@ -20,38 +21,31 @@ const subStyle = css.merge(
 	css.flex.horizontal,
 	css.flex.justifyEnd
 );
-function Circle () {
-	return <div {...css.merge(
-		css.display.block,
-		css.border.harsh,
-		css.position.absoluteCenter,
-		{
-			borderRadius: '50%',
-			width: '66%',
-			height: '66%',
-		}
-	)} />
-}
-export default function HomepageAchievements ({ x, y, z, axis, boxSize = '32px'}) {
+
+export default function HomepageAchievements ({ x, y, z, axis, boxSize = '32px', initialTicker = []}) {
 	return <WebSurface x={x} y={y} z={z} width={20} axis={axis}>
 		<div {...style}>
 			<div {...subStyle}>
-				<FillerSurface width={boxSize} height={boxSize} />
 				<div style={{ width:'10px' }} />
-				<FillerSurface width={boxSize} height={boxSize} />
+				<HomepageAchievementColumn label={'kick the baby'} register={(update) => {
+					update(update.DISCOVERED);
+					return () => { console.log('Destroyer callback for achievement tracker'); }
+				}} boxSize={boxSize} />
 				<div style={{ width:'10px' }} />
-				<FillerSurface width={boxSize} height={boxSize}><Circle/></FillerSurface>
+				<HomepageAchievementColumn label={'kick the baby'} register={(update) => {
+					update(update.REVEALED);
+					return () => { console.log('Destroyer callback for achievement tracker'); }
+				}} boxSize={boxSize} />
+				<div style={{ width:'10px' }} />
+				<HomepageAchievementColumn label={'kick the baby'} register={(update) => {
+					update(update.ACHIEVED, 'kicked the baby!');
+					return () => { console.log('Destroyer callback for achievement tracker'); }
+				}} boxSize={boxSize} />
 			</div>
 			<div style={{ height:'10px' }} />
 			<div {...subStyle}>
-				<LogFeed eventName={'ticker'} initial={['(connecting)']} maxHistory={1} />
+				<LogFeed eventName={'ticker'} initial={initialTicker} maxHistory={1} />
 			</div>
 		</div>
 	</WebSurface>
-}
-
-const derp = <div>
-
-
-
-</div>;
+};
