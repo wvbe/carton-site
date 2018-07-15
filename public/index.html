@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=1200, height=device-height, minimum-scale=0.5, initial-scale=1, maximum-scale=2.0 user-scalable=true">
     <meta name="theme-color" content="#000000">
     <style>
       body {
@@ -11,6 +11,11 @@
         overflow: hidden;
         font-family: sans-serif;
         font-size: 12px;
+
+        background-color: #F0CA4D;
+        background-image: linear-gradient(90deg, #f0ca4d 25%, #ebc641 25%, #ebc641 50%, #f0ca4d 50%, #f0ca4d 75%, #ebc641 75%, #ebc641 100%);
+        background-size: 20px 20px;
+        -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
       }
 
       body, div {
@@ -31,6 +36,6 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root" style="display: flex; width: 100%; height: 100%;"></div>
+    <div id="root"></div>
   </body>
 </html>

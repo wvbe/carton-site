@@ -2,7 +2,7 @@ import React from 'react';
 
 import perspective from '../perspective';
 
-const BORDER_WIDTH = 1;
+const BORDER_WIDTH = 0;
 
 export default function LinePath ({ path, stroke = 'black', strokeWidth = BORDER_WIDTH }) {
     let spatialCoordinates = path
