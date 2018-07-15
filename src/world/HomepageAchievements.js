@@ -6,6 +6,7 @@ import {
 import FillerSurface from '../ui/FillerSurface';
 import LogFeed from "../ui/LogFeed";
 import HomepageAchievementColumn from "./HomepageAchievementColumn";
+import timeOnlineAchievements from "../animations/timeOnlineAchievements";
 
 
 const style = css.merge(
@@ -27,20 +28,17 @@ export default function HomepageAchievements ({ x, y, z, axis, boxSize = '32px',
 		<div {...style}>
 			<div {...subStyle}>
 				<div style={{ width:'10px' }} />
-				<HomepageAchievementColumn label={'kick the baby'} register={(update) => {
+				<HomepageAchievementColumn register={(update) => {
 					update(update.DISCOVERED);
 					return () => { console.log('Destroyer callback for achievement tracker'); }
 				}} boxSize={boxSize} />
 				<div style={{ width:'10px' }} />
 				<HomepageAchievementColumn label={'kick the baby'} register={(update) => {
-					update(update.REVEALED);
+					update(update.DISCOVERED);
 					return () => { console.log('Destroyer callback for achievement tracker'); }
 				}} boxSize={boxSize} />
 				<div style={{ width:'10px' }} />
-				<HomepageAchievementColumn label={'kick the baby'} register={(update) => {
-					update(update.ACHIEVED, 'kicked the baby!');
-					return () => { console.log('Destroyer callback for achievement tracker'); }
-				}} boxSize={boxSize} />
+				<HomepageAchievementColumn register={timeOnlineAchievements} boxSize={boxSize} />
 			</div>
 			<div style={{ height:'10px' }} />
 			<div {...subStyle}>

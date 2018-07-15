@@ -88,7 +88,7 @@ export default class HomepageAchievementColumn extends Component {
 		wrapper: css.merge(
 			css.flex.vertical,
 			css.flex.justifyEnd,
-			css.position.relative),
+			css.position.relative, css.connotation.immutable),
 		label: css.merge(
 			css.flex.vertical,
 			css.flex.justifyEnd,
@@ -131,7 +131,7 @@ export default class HomepageAchievementColumn extends Component {
 				<div {...labelStyle}>
 					{ statusCode >= statusEmitter.REVEALED ?
 						labelState || labelProp :
-						'(Achievement unavailable)'
+						'(unavailable)'
 					}
 				</div>
 				{

@@ -17,6 +17,7 @@ export default class Button extends Component {
 		const style = css.merge(
 			css.border.harsh,
 			css.steno.clickable,
+			css.connotation.immutable,
 			small ?
 				css.steno.smallHeader :
 				css.steno.header,
