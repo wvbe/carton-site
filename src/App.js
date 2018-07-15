@@ -6,6 +6,7 @@ import Button from './ui/Button';
 import startFakeNews from './animations/startFakeNews';
 import World from "./World";
 import events from "./events";
+import HomepageAchievements from "./world/HomepageAchievements";
 
 const initialFakeNews = [
 	['init', 'Connected to http://wyb.be, welcome ANON'],
@@ -42,7 +43,6 @@ export default function App () {
 			<Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
 		</div>}
 		renderSecondaryButtons={() => <div>
-
 			<Button url={'resume-of-wybe-minnebo--wyb.be--2018.pdf'} small={true}>curriculum vitae</Button>
 			<Button url={'picture-of-my-cat.jpg'} small={true}>picture of my cat</Button>
 		</div>}
@@ -50,5 +50,6 @@ export default function App () {
 			initial={initialFakeNews}
 			eventName={'fake-news'}
 		/>}
+		renderAchievementsSection={() => <HomepageAchievements />}
 	/>
 }

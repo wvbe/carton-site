@@ -35,19 +35,21 @@ function HtmlContainer ({ children }) {
 		{ children }
 	</div>;
 }
-export default function World ({ renderSecondaryButtons, renderHeaderSection, renderLogSection }) {
+export default function World ({
+   renderSecondaryButtons,
+   renderHeaderSection,
+   renderLogSection,
+   renderAchievementsSection
+}) {
     return <div {...appStyle}>
 		<HtmlContainer>
 			<WebSurface x={0} y={-11} z={0} width={10} axis={'y'}>
 				{ renderSecondaryButtons() }
 			</WebSurface>
 
-			<HomepageAchievements
-				x={-13}
-				y={-20}
-				z={2}
-				axis={'y'}
-			/>
+			<WebSurface x={-13} y={0} z={2} axis={'y'}>
+				{ renderAchievementsSection() }
+			</WebSurface>
 
 			<WebSurface x={-12} y={1} z={2} width={10} axis={'x'}>
 				<div style={{ position: 'absolute', bottom: 0, width: '100%', textAlign: 'right' }}>
@@ -60,7 +62,6 @@ export default function World ({ renderSecondaryButtons, renderHeaderSection, re
 					{ renderLogSection() }
 				</div>
 			</WebSurface>
-
 		</HtmlContainer>
         <SvgContainer>
 			{/*<Anchor x={10} y={-50*2/2}>*/}

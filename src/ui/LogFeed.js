@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import events from "../events";
+import * as css from "../style";
 
 // The wrapper for one unit in the console output history
 let allLogKeys = 0;
+const logStyle = css.merge(
+	css.steno.nowrap
+);
 class Log extends Component {
 	log = {
 		time: new Date(),
@@ -26,7 +30,7 @@ class Log extends Component {
 	}
 
 	render() {
-		return <div ref={(input) => { this.element = input; }}>
+		return <div ref={(input) => { this.element = input; }} {...logStyle}>
 			{this.props.children}
 		</div>;
 	}

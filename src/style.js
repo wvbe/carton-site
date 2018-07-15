@@ -79,6 +79,9 @@ export const connotation = {
 };
 
 export const steno = {
+	nowrap: {
+		whiteSpace: 'nowrap'
+	},
     base: {
 		fontFamily: 'sans-serif',
 		color: 'black'

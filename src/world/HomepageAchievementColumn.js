@@ -93,9 +93,9 @@ export default class HomepageAchievementColumn extends Component {
 			css.flex.vertical,
 			css.flex.justifyEnd,
 			css.position.absolute,
+			css.steno.nowrap,
 			{
 				lineHeight: '32px',
-				whiteSpace: 'nowrap',
 				textAlign: 'left',
 				bottom: '42px',
 				left: '50%',
