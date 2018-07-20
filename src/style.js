@@ -6,6 +6,7 @@ export function color (input) {
     return colorJs(input);
 }
 
+export const baseLength = 12;
 
 export const flex = {
     horizontal: {
@@ -62,8 +63,8 @@ export const position = {
 
 export const border = {
     harsh: {
-		border: '1px solid black',
-		borderRadius: '2px',
+		border: Math.round(baseLength * 1/12) + 'px solid black',
+		borderRadius: Math.round(baseLength * 2/12) + 'px',
     }
 };
 
@@ -84,11 +85,12 @@ export const steno = {
 	},
     base: {
 		fontFamily: 'sans-serif',
+		fontSize: Math.round(baseLength) + 'px',
 		color: 'black'
 	},
     header: {
-		fontSize: '16px',
-		lineHeight: '30px',
+		fontSize: Math.round(baseLength * 16/12) + 'px',
+		lineHeight: Math.round(baseLength * 30/12) + 'px',
 		fontWeight: 'bold'
     },
     clickable: {

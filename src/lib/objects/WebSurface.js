@@ -4,7 +4,7 @@ import * as css from '../../style';
 import perspective from '../perspective';
 
 const scaleX = 0.8; // The pythagoras distance (root of 2) with a little tweaking for better looks
-const scaleY = Math.sqrt(0.8); // The pythagoras distance (root of 2) with a little tweaking for better looks
+// const scaleY = Math.sqrt(0.8); // The pythagoras distance (root of 2) with a little tweaking for better looks
 
 const yAxisWebSurface = {
 	position: 'absolute',
@@ -26,16 +26,15 @@ const xAxisWebSurface = {
 
 export default function WebSurface ({ x = 0, y = 0, z = 0, axis = 'y', width, height, children }) {
 	const [left, top] = perspective.toPixels(...[x, y, z]);
-	const [pixelWidth, pixelHeight] = perspective.toPixels(0, width, height);
-	const style = css.merge({},
-		axis === 'y' ? yAxisWebSurface : axis === 'x' ? xAxisWebSurface : zAxisWebSurface,
+	const [pixelWidth] = perspective.toPixels(0, width, height);
+	const style = css.merge(axis === 'y' ? yAxisWebSurface : axis === 'x' ? xAxisWebSurface : zAxisWebSurface,
 		{
 			left,
 			top,
 			width: pixelWidth / 0.8 + 'px',
 			height: height ? pixelWidth / 0.8 + 'px' : null
 		});
-	return <div {...style}>
+	return <div {...style} {...css.merge(css.steno.base)}>
 		{ children }
 	</div>
 }

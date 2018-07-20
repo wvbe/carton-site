@@ -2,14 +2,11 @@ import React from 'react';
 import * as css from './style';
 import {
 	Container as SvgContainer,
-	WebSurface,
-	WireframeSea
+	WebSurface
 } from './lib/3d';
 
 import HomepageAsciiArt from './world/HomepageAsciiArt';
-import HomepageAchievements from "./world/HomepageAchievements";
 import Anchor from "./lib/3d/Anchor";
-import hasBlink from "./ui/hasBlink";
 
 
 
@@ -27,8 +24,6 @@ function HtmlContainer ({ children }) {
 	</div>;
 }
 
-const BlinkingAnchor = hasBlink(Anchor, { interval: 1000 });
-const OtherBlinkingAnchor = hasBlink(Anchor, { interval: 1000, delay: 1000 });
 export default function World ({
    renderSecondaryButtons,
    renderHeaderSection,
@@ -83,6 +78,7 @@ export default function World ({
 				x={1} y={-38} z={-7}
 				crosshairSize={2}
 			/>
+
 		</SvgContainer>
 	];
 }

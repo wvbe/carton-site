@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import * as css from '../style';
 export default function FillerSurface ({
    width = '100%',

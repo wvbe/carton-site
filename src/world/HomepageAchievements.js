@@ -1,8 +1,5 @@
 import React from 'react';
 import * as css from '../style';
-import {
-	WebSurface
-} from '../lib/3d';
 import LogFeed from "../ui/LogFeed";
 import HomepageAchievementColumn from "./HomepageAchievementColumn";
 import timeOnlineAchievements from "../animations/timeOnlineAchievements";
@@ -17,6 +14,7 @@ const style = css.merge(
 		right: 0,
 		textAlign: 'right'
 	});
+
 const subStyle = css.merge(
 	css.flex.horizontal,
 	css.flex.justifyEnd

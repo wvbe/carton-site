@@ -6,7 +6,7 @@
 // 0,0  \
 //        \
 //          \ x+
-
+import { baseLength } from '../style';
 function createPerspective (degrees, tileSize) {
 	const isometricAngle = degrees * (Math.PI / 180);
 	const _isometricCos = Math.cos(isometricAngle);
@@ -42,4 +42,4 @@ function createPerspective (degrees, tileSize) {
 	}
 }
 
-export default createPerspective(30, 12);
+export default createPerspective(30, baseLength);

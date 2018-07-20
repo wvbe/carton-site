@@ -17,7 +17,7 @@ function Circle ({ disabled = false}) {
 			disabled ?
 				{
 					borderRadius: '0%',
-					width: '100%',
+					width: '90%',
 					height: '0',
 					opacity: 0
 				} :

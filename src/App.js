@@ -7,6 +7,7 @@ import startFakeNews from './animations/startFakeNews';
 import World from "./World";
 import events from "./events";
 import HomepageAchievements from "./world/HomepageAchievements";
+import Overlay from "./Overlay";
 
 const initialFakeNews = [
 	['init', 'Connected to http://wyb.be, welcome ANON'],
@@ -32,24 +33,32 @@ const tickerMessages = [
 	'syntax errors: 0x0C',
 	'tachyonic paradox: 0x00'
 ];
+
 setInterval(() => events.emit('ticker', tickerMessages[i++ % tickerMessages.length]), 1500);
 
 export default function App () {
-    return <World
-		renderHeaderSection={() => <div>
-			<p>wybe minnebo<br />application developer<br />and shenanigans</p>
-			<p>★★★★★</p>
-			<Button url={'https://github.com/wvbe'}>GitHub</Button>
-			<Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
-		</div>}
-		renderSecondaryButtons={() => <div>
-			<Button url={'resume-of-wybe-minnebo--wyb.be--2018.pdf'} small={true}>curriculum vitae</Button>
-			<Button url={'picture-of-my-cat.jpg'} small={true}>picture of my cat</Button>
-		</div>}
-		renderLogSection={() => <ForgetFeed
-			initial={initialFakeNews}
-			eventName={'fake-news'}
-		/>}
-		renderAchievementsSection={() => <HomepageAchievements />}
-	/>
+    return [
+    	<World
+			key={'the isometric world of html, css transform and svg'}
+
+			renderHeaderSection={() => <div>
+				<p>wybe minnebo<br />application developer<br />and shenanigans</p>
+				<p>★★★★★</p>
+				<Button url={'https://github.com/wvbe'}>GitHub</Button>
+				<Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
+			</div>}
+
+			renderSecondaryButtons={() => <div>
+				<Button url={'resume-of-wybe-minnebo--wyb.be--2018.pdf'} small={true}>curriculum vitae</Button>
+				<Button url={'picture-of-my-cat.jpg'} small={true} onClick={()=> console.log('Minggg')}>picture of my cat</Button>
+			</div>}
+
+			renderLogSection={() => <ForgetFeed
+				initial={initialFakeNews}
+				eventName={'fake-news'}a
+			/>}
+
+			renderAchievementsSection={() => <HomepageAchievements />}
+		/>
+	]
 }

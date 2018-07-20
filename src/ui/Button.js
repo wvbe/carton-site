@@ -9,7 +9,8 @@ export default class Button extends Component {
 			url,
 			children,
 			small = false,
-			title = null
+			title = null,
+			onClick = null
 		} = this.props;
 		const {
 			clicked
@@ -47,7 +48,13 @@ export default class Button extends Component {
 			href={url}
 		  	target={'_blank'}
 			title={title}
-			onClick={() => this.setState({clicked: true})}
+			onClick={(...args) => {
+				if (typeof onClick === 'function') {
+					onClick(...args);
+				}
+
+				this.setState({clicked: true})
+			}}
 		>
 			{children}
 		</a>;
