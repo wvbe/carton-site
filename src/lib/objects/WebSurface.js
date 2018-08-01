@@ -3,8 +3,7 @@ import * as css from '../../style';
 
 import perspective from '../perspective';
 
-const scaleX = 0.8; // The pythagoras distance (root of 2) with a little tweaking for better looks
-// const scaleY = Math.sqrt(0.8); // The pythagoras distance (root of 2) with a little tweaking for better looks
+const scaleX = 0.8; // The pythagoras distance (1/sqrt(2)) with a little tweaking for better looks
 
 const yAxisWebSurface = {
 	position: 'absolute',
@@ -31,8 +30,8 @@ export default function WebSurface ({ x = 0, y = 0, z = 0, axis = 'y', width, he
 		{
 			left,
 			top,
-			width: pixelWidth / 0.8 + 'px',
-			height: height ? pixelWidth / 0.8 + 'px' : null
+			width: pixelWidth / scaleX + 'px',
+			height: height ? pixelWidth / scaleX + 'px' : null
 		});
 	return <div {...style} {...css.merge(css.steno.base)}>
 		{ children }

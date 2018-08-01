@@ -1,6 +1,7 @@
 import colorJs from 'color-js';
 
 export { merge } from 'glamor';
+export { keyframes } from 'glamor';
 
 export function color (input) {
     return colorJs(input);

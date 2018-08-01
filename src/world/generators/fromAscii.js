@@ -7,7 +7,7 @@ export default function fromAscii (ascii, axis) {
 	const tiles = ascii
 		.trim()
 		.split('\n')
-		.map(line => line.split('').map(char => !!char.trim()));
+		.map(line => line.split('').map(char => char === '#'));
 
 	// const maxHeight = tiles.length;
 	// const maxWidth = tiles.reduce((max, line) => Math.max(max, line.length), 0);

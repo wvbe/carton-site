@@ -7,6 +7,7 @@ import {
 
 import HomepageAsciiArt from './world/HomepageAsciiArt';
 import Anchor from "./lib/3d/Anchor";
+// import WireframeSea from "./lib/objects/WireframeSea";
 
 
 
@@ -31,12 +32,34 @@ export default function World ({
    renderAchievementsSection
 }) {
     return [
+		<SvgContainer key={'crosshairs-bg'}>
+			<Anchor
+				// Between main menu and achievements
+				x={-13} y={0} z={0}
+				crosshairSize={2}
+			/>
+			<Anchor
+				// in the top right of secondary buttons
+				x={0} y={1} z={-7}
+				crosshairSize={2}
+			/>
+			<Anchor
+				// In the bottom left of the fake news log
+				x={0} y={1} z={1}
+				crosshairSize={2}
+			/>
+			<Anchor
+				// In the bottom left of the fake news log
+				x={-12} y={0} z={0}
+				crosshairSize={2}
+			/>
+		</SvgContainer>,
 		<HtmlContainer key={'most-of-the-ui'}>
 			<WebSurface x={0} y={-11} z={-1} width={10} axis={'y'}>
 				{ renderSecondaryButtons() }
 			</WebSurface>
 
-			<WebSurface x={-12} y={-1} z={1} axis={'y'}>
+			<WebSurface x={-13} y={-1} z={1} axis={'y'}>
 				{ renderAchievementsSection() }
 			</WebSurface>
 
@@ -51,6 +74,11 @@ export default function World ({
 					{ renderLogSection() }
 				</div>
 			</WebSurface>
+			{/* <WebSurface x={1} y={-18} z={-7} width={25} axis={'z'}>
+				<div style={{position: 'absolute', top: 0, width: '100%' }}>
+					{ renderLogSection() }
+				</div>
+			</WebSurface> */}
 		</HtmlContainer>,
 
         <SvgContainer key={'3d-text'}>
@@ -59,24 +87,14 @@ export default function World ({
 
 		<SvgContainer key={'crosshairs'}>
 			<Anchor
-				// in the top right of secondary buttons
-				x={1} y={0} z={-7}
+				// Bottom "ux", aligns with the "M" crosshair above it
+				x={0} y={-31} z={-7}
 				crosshairSize={2}
 			/>
 			<Anchor
-				// Between main menu and achievements
-				x={-12} y={0} z={0}
-				crosshairSize={2}
-			/>
-			<Anchor
-				// In the bottom right of the fake news log
-				x={0} y={1} z={1}
-				crosshairSize={2}
-			/>
-			<Anchor
-				// Bottom left (front) of "ux+js"
-				x={1} y={-38} z={-7}
-				crosshairSize={2}
+				// Right through the "M" of "Minnebo"
+				x={0} y={-31} z={0}
+				crosshairSize={4}
 			/>
 
 		</SvgContainer>
