@@ -11,6 +11,8 @@ import LogFeed from './ui/LogFeed';
 import AnimatedBackground from "./AnimatedBackground";
 import hasBlink from './ui/hasBlink';
 
+import { createExplorationGoal } from './animations/explorationAchievements';
+
 const initialFakeNews = [
 	['init', 'Connected to http://wyb.be, welcome ANON'],
 	['ws', '0x://websocket'],
@@ -36,28 +38,36 @@ const tickerMessages = [
 ];
 setInterval(() => events.emit('ticker', tickerMessages[i++ % tickerMessages.length]), 500);
 
+const explorationAchievements = {
+	github: createExplorationGoal(),
+	linkedin: createExplorationGoal(),
+	cat: createExplorationGoal(),
+	cv: createExplorationGoal()
+}
 const subjects = [
 	'web', 'responsive', 'interaction', 'tech', 'schema', 'nodejs', 'full-stack', 'intergalactic',
 	'usability', 'experience', 'multi-disciplinary', 'open-source', 'frontend', 'art', 'devops', 'graphic',
 	'software', 'creative', 'javascript', 'pixel', 'internet', 'communications'
 ];
+
 const roles = [
 	'developer', 'designer', 'enthousiast', 'guru', 'ninja', 'wizard', 'harry', 'programmer', 'engineer',
 	'professional', 'architect', 'evangelist', 'strategist', 'consultant', 'technician', 'master', 'hacker',
 	'guy', 'person', 'buddy', 'pusher'
 ];
+
 function getRandomJobTitle () {
 	return [
 		subjects[Math.floor(subjects.length * Math.random())],
 		roles[Math.floor(subjects.length * Math.random())]
 	].join(' ');
 }
+
 setTimeout(() => setInterval(() => events.emit('jobTicker', getRandomJobTitle()), 100), 3000);
 
 const BlinkFast = hasBlink(({ children }) => <span>{ children }</span>, { interval: 1000 });
 export default function App () {
     return [
-
 		<AnimatedBackground
 			key={'the rotating circular thing in the background'}
 		/>,
@@ -71,13 +81,13 @@ export default function App () {
 					maxHistory={1} />
 				<div>and shenanigans</div>
 				<p><BlinkFast>★</BlinkFast>★★★★</p>
-				<Button url={'https://github.com/wvbe'}>GitHub </Button>
-				<Button url={'https://www.linkedin.com/in/wybeminnebo/'}>LinkedIn</Button>
+				<Button url={'https://github.com/wvbe'} onClick={explorationAchievements.github}>GitHub </Button>
+				<Button url={'https://www.linkedin.com/in/wybeminnebo/'} onClick={explorationAchievements.linkedin}>LinkedIn</Button>
 			</div>}
 
 			renderSecondaryButtons={() => <div>
-				<Button url={'resume-of-wybe-minnebo--wyb.be--2018.pdf'} small={true}>curriculum vitae</Button>
-				<Button url={'picture-of-my-cat.jpg'} small={true} onClick={()=> console.log('Minggg')}>picture of my cat</Button>
+				<Button url={'resume-of-wybe-minnebo--wyb.be--2018.pdf'} small={true} onClick={explorationAchievements.cv}>curriculum vitae</Button>
+				<Button url={'picture-of-my-cat.jpg'} small={true} onClick={explorationAchievements.cat}>picture of my cat</Button>
 			</div>}
 
 			renderLogSection={() => <ForgetFeed

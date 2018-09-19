@@ -32,7 +32,7 @@ export default function World ({
    renderAchievementsSection
 }) {
     return [
-		<SvgContainer key={'crosshairs-bg'}>
+		<SvgContainer key={'crosshairs-underlay'}>
 			<Anchor
 				// Between main menu and achievements
 				x={-13} y={0} z={0}
@@ -54,6 +54,7 @@ export default function World ({
 				crosshairSize={2}
 			/>
 		</SvgContainer>,
+
 		<HtmlContainer key={'most-of-the-ui'}>
 			<WebSurface x={0} y={-11} z={-1} width={10} axis={'y'}>
 				{ renderSecondaryButtons() }
@@ -85,7 +86,7 @@ export default function World ({
 			<HomepageAsciiArt />
         </SvgContainer>,
 
-		<SvgContainer key={'crosshairs'}>
+		<SvgContainer key={'crosshairs-overlay'}>
 			<Anchor
 				// Bottom "ux", aligns with the "M" crosshair above it
 				x={0} y={-31} z={-7}

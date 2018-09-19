@@ -1,5 +1,4 @@
 export default function timeOnlineAchievements (update) {
-
 	update(update.REVEALED, 'Time  online');
 
 	const timeOuts = [
