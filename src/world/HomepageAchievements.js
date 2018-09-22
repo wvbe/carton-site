@@ -35,7 +35,7 @@ export default function HomepageAchievements ({ boxSize = '32px', initialTicker 
 			<div style={{ width:'10px' }} />
 
 			<HomepageAchievementColumn label={'kick the baby'} register={(update) => {
-				update(update.REVEALED);
+				update(update.DISCOVERED);
 				return () => { console.log('Destroyer callback for achievement tracker'); }
 			}} boxSize={boxSize} />
 
