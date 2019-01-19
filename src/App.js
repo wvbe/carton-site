@@ -11,7 +11,10 @@ import LogFeed from './ui/LogFeed';
 import AnimatedBackground from "./AnimatedBackground";
 import hasBlink from './ui/hasBlink';
 
-import { createExplorationGoal } from './animations/explorationAchievements';
+import {
+	createExplorationGoal,
+	createFirstExplorationTrigger
+} from './animations/explorationAchievements';
 
 const initialFakeNews = [
 	['init', 'Connected to http://wyb.be, welcome ANON'],
@@ -41,9 +44,10 @@ setInterval(() => events.emit('ticker', tickerMessages[i++ % tickerMessages.leng
 const explorationAchievements = {
 	github: createExplorationGoal(),
 	linkedin: createExplorationGoal(),
-	cat: createExplorationGoal(),
-	cv: createExplorationGoal()
+	cat: createFirstExplorationTrigger('cat', 'Clicked the cat pic first lol'),
+	cv: createFirstExplorationTrigger('cv', 'Went straight for the CV')
 }
+
 const subjects = [
 	'web', 'responsive', 'interaction', 'tech', 'schema', 'nodejs', 'full-stack', 'intergalactic',
 	'usability', 'experience', 'multi-disciplinary', 'open-source', 'frontend', 'art', 'devops', 'graphic',

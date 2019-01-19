@@ -4,7 +4,7 @@ import LogFeed from "../ui/LogFeed";
 import HomepageAchievementColumn from "./HomepageAchievementColumn";
 
 import timeOnlineAchievements from "../animations/timeOnlineAchievements";
-import explorationAchievements from "../animations/explorationAchievements";
+import { totalProgress, firstOpened } from "../animations/explorationAchievements";
 
 
 const style = css.merge(
@@ -34,14 +34,18 @@ export default function HomepageAchievements ({ boxSize = '32px', initialTicker 
 
 			<div style={{ width:'10px' }} />
 
-			<HomepageAchievementColumn label={'kick the baby'} register={(update) => {
+			<HomepageAchievementColumn register={(update) => {
 				update(update.DISCOVERED);
 				return () => { console.log('Destroyer callback for achievement tracker'); }
 			}} boxSize={boxSize} />
 
 			<div style={{ width:'10px' }} />
 
-			<HomepageAchievementColumn register={explorationAchievements} boxSize={boxSize} />
+			<HomepageAchievementColumn register={firstOpened} boxSize={boxSize} />
+
+			<div style={{ width:'10px' }} />
+
+			<HomepageAchievementColumn register={totalProgress} boxSize={boxSize} />
 
 			<div style={{ width:'10px' }} />
 

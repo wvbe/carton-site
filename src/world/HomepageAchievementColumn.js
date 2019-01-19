@@ -51,6 +51,7 @@ function Circle ({ disabled = false}) {
 const FLAGS = [
 	'initialized',
 	'discovered',
+	'failed',
 	'revealed',
 	'achieved'
 ];
@@ -131,11 +132,14 @@ export default class HomepageAchievementColumn extends Component {
 				<div {...labelStyle}>
 					{ statusCode >= statusEmitter.REVEALED ?
 						labelState || labelProp :
-						'(unavailable)'
+						statusCode === statusEmitter.FAILED ? labelState || labelProp || '(failed)' : '(undiscovered)'
 					}
 				</div>
 				{
-					statusCode >= statusEmitter.REVEALED ?
+					statusCode <= statusEmitter.FAILED ?
+						<FillerSurface width={boxSize} height={boxSize} hasBackground={true} rgb={ (statusCode === statusEmitter.FAILED && '255,0,0') || undefined }>
+
+						</FillerSurface> :
 						<div {...css.merge(
 							css.position.absolute,
 							css.position.relative,
@@ -143,9 +147,7 @@ export default class HomepageAchievementColumn extends Component {
 							{ width: boxSize, height: boxSize }
 						)}>
 							<Circle disabled={statusCode < statusEmitter.ACHIEVED}/>
-						</div> :
-						<FillerSurface width={boxSize} height={boxSize}>
-						</FillerSurface>
+						</div>
 				}
 			</div>;
 		}

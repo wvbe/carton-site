@@ -4,7 +4,7 @@ const explorationEmitter = new EventEmitter();
 const explored = [];
 const discovered = [];
 
-export function totalProgress (update) {
+export default function explorationAchievements (update) {
 	update(update.DISCOVERED);
 
 	const destroyer = explorationEmitter.on('change', () => {
@@ -14,33 +14,6 @@ export function totalProgress (update) {
 	});
 
 	return destroyer;
-}
-
-export function firstOpened (update) {
-	update(update.DISCOVERED);
-
-	const destroyer = explorationEmitter.on('change', () => {
-		if (explored.length !== 1) {
-			return;
-		}
-
-		const registeredFeedback = feedback[explored[0]];
-		if (!registeredFeedback)
-			update(update.FAILED, '(forfeited)');
-			else
-
-		update(update.ACHIEVED, registeredFeedback);
-	});
-
-	return destroyer;
-}
-
-const feedback = {};
-
-export function createFirstExplorationTrigger (href = Symbol('unnamed exploration goal'), str) {
-	feedback[href] = str;
-
-	return createExplorationGoal(href);
 }
 
 export function createExplorationGoal (href = Symbol('unnamed exploration goal')) {
@@ -53,12 +26,19 @@ export function createExplorationGoal (href = Symbol('unnamed exploration goal')
 			return;
 		}
 
-		if (!explored.length) {
-
-		}
-
 		explored.push(href);
 
 		explorationEmitter.emit('change');
 	}
+}
+export function createAchievementOnFirst (update) {
+	update(update.DISCOVERED);
+
+	const destroyer = explorationEmitter.on('change', () => {
+		update(
+			explored.length >= discovered.length ? update.ACHIEVED : update.REVEALED,
+			`Exploration (${explored.length}/${discovered.length})`);
+	});
+
+	return destroyer;
 }

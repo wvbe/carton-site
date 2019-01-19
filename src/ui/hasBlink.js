@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 export default function hasBlink (Comp, {
 	interval = 500, // blink every x milliseconds
-	delay = null // wait ms before starting the interval (phase)
+	delay = null, // wait ms before starting the interval (phase),
+	decide = state => !state
 } = {}) {
 	return class BlinkHoc extends Component {
 		state = {
@@ -14,10 +15,14 @@ export default function hasBlink (Comp, {
 
 		componentDidMount () {
 			console.log('blink on');
+
+			let i = 0;
 			const switcheroo = () => {
-				this.setState({
-					visible: !this.state.visible
-				});
+				const visible = decide(this.state.visible, i++);
+
+				if (visible !== this.state.visible) {
+					this.setState({ visible });
+				}
 			};
 
 
@@ -26,6 +31,7 @@ export default function hasBlink (Comp, {
 				this.interval = setInterval(switcheroo, interval);
 				return;
 			}
+
 			setTimeout(() => {
 				switcheroo();
 				this.timeout = null;
