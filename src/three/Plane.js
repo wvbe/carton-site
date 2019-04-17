@@ -1,37 +1,22 @@
+import React from 'react';
 import {
-	useContext
-} from 'react';
-import {
-	PlaneBufferGeometry,
-	MeshBasicMaterial,
-	ShadowMaterial,
-	Mesh
+	PlaneBufferGeometry
 } from 'three';
 
-import SceneContext from './SceneContext';
+import Mesh from './Mesh';
 
 export default function Scene ({
 	width = 10,
 	height = 10,
 	widthSegments,
 	heightSegments,
-	material
+	...meshProps
 }) {
-	const scene = useContext(SceneContext);
+	const geometry = new PlaneBufferGeometry(width, height, widthSegments, heightSegments);
+	geometry.rotateX(-Math.PI / 2);
 
-	var planeGeometry = new PlaneBufferGeometry(width, height, widthSegments, heightSegments);
-	planeGeometry.rotateX( - Math.PI / 2 );
-
-	var planeMaterial = new MeshBasicMaterial({
-		wireframe: false,
-		color: 0xcccccc,
-		opacity: 0.6
-	}) || new ShadowMaterial( { opacity: 0.5 } );
-	var plane = new Mesh( planeGeometry, planeMaterial );
-
-	// plane.position.y = 100;
-	plane.receiveShadow = true;
-
-	scene.add(plane);
-	return null;
+	return <Mesh
+		geometry={ geometry }
+		{ ...meshProps }
+	/>;
 }

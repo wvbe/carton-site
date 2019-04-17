@@ -1,33 +1,18 @@
+import React from 'react';
 import {
-	useContext
-} from 'react';
-import {
-	Mesh,
-	MeshNormalMaterial,
 	MeshBasicMaterial,
-	CubeGeometry,
-	ShadowMaterial,
-	MeshStandardMaterial
+	CubeGeometry
 } from 'three';
 
-import SceneContext from './SceneContext';
+import Mesh from './Mesh';
 
 export default function Scene ({
-	x = 0,
-	y = 0,
-	z = 0,
-	material = new MeshBasicMaterial({
-		wireframe: true,
-		color: 0x666666
-	})
+	...meshProps
 }) {
-	const scene = useContext(SceneContext);
+	const geometry = new CubeGeometry(1,1,1);
 
-	const cube = new Mesh(new CubeGeometry(1,1,1), material);
-	cube.position.x = x + 0.5;
-	cube.position.y = y + 0.5;
-	cube.position.z = z + 0.5;
-
-	scene.add(cube);
-	return null;
+	return <Mesh
+		geometry={ geometry }
+		{ ...meshProps }
+	/>;
 }
