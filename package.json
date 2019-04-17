@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "color-js": "^1.0.4",
-    "fs-extra": "^6.0.1",
-    "glamor": "^2.20.40",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "three": "^0.103.0",
+    "three-orbitcontrols": "^2.102.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -22,10 +21,6 @@
   },
   "homepage": ".",
   "devDependencies": {
-    "gh-pages": "^1.1.0",
-    "glob": "^7.1.2",
-    "remark-parse": "^5.0.0",
-    "unified": "^7.0.0",
-    "xml-trident": "^1.0.1-rc1"
+    "gh-pages": "^1.1.0"
   }
 }
