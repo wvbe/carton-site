@@ -6,6 +6,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-scripts": "1.1.4",
+    "react-three-fiber": "^2.0.8",
     "three": "^0.103.0",
     "three-orbitcontrols": "^2.102.1"
   },
