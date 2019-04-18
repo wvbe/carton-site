@@ -9,7 +9,7 @@ import SceneContext from './SceneContext';
 
 export default function Scene ({
 	fieldOfView = 70,
-	aspectRatio = window.innerWidth / window.innerHeight,
+	aspectRatio = ,
 	nearPlane = 1,
 	farPlane  = 10000,
 	position = { x: 0, y: 250, z: 1000 }

@@ -1,61 +1,69 @@
 import React from 'react';
-import {
-	MeshStandardMaterial,
-	MeshBasicMaterial,
-	Shape,
-	ShapeGeometry
-} from 'three';
-import Scene from './three/Scene';
-import DumpSceneContext from './three/DumpSceneContext';
-import PerspectiveCamera from './three/PerspectiveCamera';
-import AmbientLight from './three/AmbientLight';
-import Voxel from './three/Voxel';
-import SpotLight from './three/SpotLight';
-import Renderer from './three/Renderer';
-import Mesh from './three/Mesh';
-import Plane from './three/Plane';
-import FontoLogo from './shapes/FontoLogo';
-import GridHelper from './three/GridHelper';
+import OrbitControls from 'three-orbitcontrols';
+import { PerspectiveCamera, Vector3, Color } from 'three';
+import { Canvas, useRender, useThree } from 'react-three-fiber';
+import * as materials from './materials';
+function Orbs () {
+	const {
+		canvas,
+		camera,
+		scene
+	} = useThree();
 
-var heartShape = new Shape();
-var x = 0, y = 0;
-heartShape.moveTo( x + 5, y + 5 );
-heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
-heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7,x - 6, y + 7 );
-heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
-heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
-heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
-heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
+	scene.background = new Color(0xf0f0f0);
+	var controls = new OrbitControls(camera, canvas);
+	controls.damping = 0.2;
 
-var heartGeometry = new ShapeGeometry( heartShape );
+	return null;
+}
 
-const demoMaterial = new MeshStandardMaterial( { color: 0xA00000, roughness: 0, metalness: 0.5  });
 export default function App ({ }) {
-	return <Scene>
-		<AmbientLight intensity={2} />
+	const camera = new PerspectiveCamera(
+		70,
+		window.innerWidth / window.innerHeight,
+		1,
+		1000);
+	camera.position.set(0, 150, 100);
+	camera.lookAt(new Vector3(0, 0, 0));
 
-		<SpotLight />
 
-		{/* <Plane material={demoMaterial} width={100} height={100}/> */}
+	return <Canvas camera={ camera }>
+		<Orbs />
+		{/* <axesHelper args={[50]} /> */}
+		<gridHelper args={[100, 100, 0x999999, 0xcccccc]} />
+		<ambientLight color={ 0xffffff } intensity={ 1.5 } />
 
-		<GridHelper />
-		<FontoLogo />
-		{/* <Mesh
-			geometry={ heartGeometry }
-		/>
-		<Voxel /> */}
+		<spotLight color={ 'blue' } intensity={ 2 }
+				position={[0, 200, -500]}>
+			<lightShadow
+				attach="shadow"
+				args={[new PerspectiveCamera( 70, 1, 200, 2000 )]}
+				bias={ -0.000222 }
+				mapSize={{ width: 1024, height: 1024 }}
+			/>
+		</spotLight>
+		<spotLight color={ 'red' } intensity={ 2 }
+				position={[200, 500, 50]}>
+			<lightShadow
+				attach="shadow"
+				args={[new PerspectiveCamera( 70, 1, 200, 2000 )]}
+				bias={ -0.000222 }
+				mapSize={{ width: 1024, height: 1024 }}
+			/>
+		</spotLight>
+		<spotLight color={ 'red' } intensity={ 2 }
+				position={[-33, -200, 100]}>
+			<lightShadow
+				attach="shadow"
+				args={[new PerspectiveCamera( 70, 1, 200, 2000 )]}
+				bias={ -0.000222 }
+				mapSize={{ width: 1024, height: 1024 }}
+			/>
+		</spotLight>
 
-		{ Array.from(new Array(200)).map((x, i) => <Voxel
-			key={ i }
-			x={-25 + Math.floor(50*Math.random())}
-			y={-5 + Math.floor(10*Math.random())}
-			z={-25 + Math.floor(50*Math.random())}
-			material={ demoMaterial }
-		/>) }
-
-		<Renderer
-			// width={ document.body.clientWidth }
-			// height={ window.innerHeight / 2 }
-		/>
-	</Scene>;
+		<mesh material={ materials.demoMaterial }>
+			<dodecahedronGeometry attach="geometry" args={[10]} />
+			{/* <meshStandardMaterial attach="material" color="indianred" transparent /> */}
+		</mesh>
+	</Canvas>;
 }

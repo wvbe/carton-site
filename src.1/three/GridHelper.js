@@ -15,7 +15,7 @@ export default function Scene ({
 }) {
 	const scene = useContext(SceneContext);
 
-	var helper = new GridHelper(size, divisions);
+	var helper = new GridHelper(size, divisions, 0x999999);
 	// helper.position.y = - 199;
 	// helper.position.z = - 699;
 	helper.material.opacity = opacity;

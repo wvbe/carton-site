@@ -11,10 +11,7 @@ import SceneContext from './SceneContext';
 
 export default function MeshComponent ({
 	geometry = new CubeGeometry(1,1,1),
-	material = new MeshBasicMaterial({
-		wireframe: true,
-		color: 0x666666
-	}),
+	material = ,
 	x = 0,
 	y = 0,
 	z = 0
