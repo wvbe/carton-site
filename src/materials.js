@@ -3,7 +3,8 @@ import {
 	MeshStandardMaterial,
 	MeshNormalMaterial,
 	SphericalReflectionMapping,
-	MeshPhongMaterial
+	MeshPhongMaterial,
+	MeshToonMaterial
 } from 'three';
 
 export const wireframe = new MeshBasicMaterial({
@@ -14,10 +15,17 @@ export const wireframe = new MeshBasicMaterial({
 
 export const normal = new MeshNormalMaterial();
 
-export const demoMaterial = new MeshPhongMaterial({
-	color: 'rgb(0,0,40)',
+export const whiteMaterial = new MeshPhongMaterial({
+	color: 0x666666,
 	flatShading: false,
-	shininess: 50
+	shininess: 30
+});
+
+export const demoMaterial = new MeshPhongMaterial({
+	color: 'rgb(20, 20, 80)',
+	flatShading: false,
+	shininess: 120,
+	specular: 75
 });
 
 export const redMaterial = new MeshStandardMaterial({

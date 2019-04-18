@@ -1,8 +1,9 @@
 import React from 'react';
 import OrbitControls from 'three-orbitcontrols';
-import { PerspectiveCamera, Vector3, Color } from 'three';
+import { PerspectiveCamera, Vector3, Color, SphereBufferGeometry } from 'three';
 import { Canvas, useRender, useThree } from 'react-three-fiber';
 import * as materials from './materials';
+import Spotlights from './compositions/Spotlights';
 function Orbs () {
 	const {
 		canvas,
@@ -31,39 +32,34 @@ export default function App ({ }) {
 		<Orbs />
 		{/* <axesHelper args={[50]} /> */}
 		<gridHelper args={[100, 100, 0x999999, 0xcccccc]} />
-		<ambientLight color={ 0xffffff } intensity={ 1.5 } />
+		<ambientLight color={ 0xffffff } intensity={ 1 } />
+		<Spotlights lights={12} />
 
-		<spotLight color={ 'blue' } intensity={ 2 }
-				position={[0, 200, -500]}>
-			<lightShadow
-				attach="shadow"
-				args={[new PerspectiveCamera( 70, 1, 200, 2000 )]}
-				bias={ -0.000222 }
-				mapSize={{ width: 1024, height: 1024 }}
-			/>
-		</spotLight>
-		<spotLight color={ 'red' } intensity={ 2 }
-				position={[200, 500, 50]}>
-			<lightShadow
-				attach="shadow"
-				args={[new PerspectiveCamera( 70, 1, 200, 2000 )]}
-				bias={ -0.000222 }
-				mapSize={{ width: 1024, height: 1024 }}
-			/>
-		</spotLight>
-		<spotLight color={ 'red' } intensity={ 2 }
-				position={[-33, -200, 100]}>
-			<lightShadow
-				attach="shadow"
-				args={[new PerspectiveCamera( 70, 1, 200, 2000 )]}
-				bias={ -0.000222 }
-				mapSize={{ width: 1024, height: 1024 }}
-			/>
-		</spotLight>
-
-		<mesh material={ materials.demoMaterial }>
+		<mesh material={ materials.whiteMaterial }>
 			<dodecahedronGeometry attach="geometry" args={[10]} />
-			{/* <meshStandardMaterial attach="material" color="indianred" transparent /> */}
 		</mesh>
+
+		<mesh material={ materials.demoMaterial } position={[20, 0, 20]}>
+			<sphereBufferGeometry attach="geometry" args={[10, 32, 32]} />
+		</mesh>
+
+		<group position={[-20, 0, 20]} rotation={[Math.PI/9, Math.PI/7, Math.PI/3]}>
+			<mesh material={ materials.redMaterial } position={[0, 0, 0]}>
+				<boxBufferGeometry attach="geometry" args={[10, 10, 10]} />
+			</mesh>
+			<mesh material={ materials.redMaterial } position={[0, 0, -20]}>
+				<boxBufferGeometry attach="geometry" args={[10, 10, 10]} />
+			</mesh>
+			<mesh material={ materials.redMaterial } position={[0, 0, -40]}>
+				<boxBufferGeometry attach="geometry" args={[10, 10, 10]} />
+			</mesh>
+			<mesh material={ materials.redMaterial } position={[0, 0, -60]}>
+				<boxBufferGeometry attach="geometry" args={[10, 10, 10]} />
+			</mesh>
+			<mesh material={ materials.redMaterial } position={[0, 0, -80]}>
+				<boxBufferGeometry attach="geometry" args={[10, 10, 10]} />
+			</mesh>
+
+		</group>
 	</Canvas>;
 }
