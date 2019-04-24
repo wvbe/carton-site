@@ -8,9 +8,9 @@ import {
 
 export default function OrbitControlsComponent ({
 	damping = 0.2,
-	minAzimuthAngle = -Infinity,
-	maxAzimuthAngle = Infinity,
-	autoRotateSpeed = false
+	zoomSpeed = 1.2,
+	panSpeed = 0.8,
+	rotateSpeed = 16
 }) {
 	const {
 		canvas,
@@ -24,12 +24,12 @@ export default function OrbitControlsComponent ({
 		console.log('-- new ThreeTrackballControls');
 		controls = new ThreeTrackballControls(camera, canvas);
 
-		controls.rotateSpeed = 16.0;
-		controls.zoomSpeed = 1.2;
-		controls.panSpeed = 0.8;
+		controls.rotateSpeed = rotateSpeed;
+		controls.zoomSpeed = zoomSpeed;
+		controls.panSpeed = panSpeed;
 
-		controls.noZoom = false;
-		controls.noPan = false;
+		controls.noZoom = !zoomSpeed;
+		controls.noPan = !panSpeed;
 
 		controls.staticMoving = true;
 		controls.dynamicDampingFactor = 0.3;

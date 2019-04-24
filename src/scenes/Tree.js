@@ -17,7 +17,9 @@ import {
 
 import * as materials from '../materials';
 
+import LineDomeProjection from '../compositions/LineDomeProjection';
 import OrbitControls from '../compositions/OrbitControls';
+import Background from '../compositions/Background';
 import TrackballControls from '../compositions/TrackballControls';
 
 function Text({
@@ -49,27 +51,7 @@ function Text({
 		null;
 }
 
-
-function HelperMeshes () {
-	return (<React.Fragment>
-		<axisHelper args={[10]}/>
-
-		{/* <gridHelper args={[100, 100, 0xcccccc]} /> */}
-
-		<mesh>
-			<sphereBufferGeometry args={[70, 90, 90]} attach='geometry' />
-			<meshBasicMaterial wireframe color={0xeeeeee} attach='material' />
-		</mesh>
-	</React.Fragment>);
-}
-
-function HelperLights () {
-	return (<React.Fragment>
-		<directionalLight color={ 0xffffff } />
-	</React.Fragment>);
-}
-
-export default function Tree ({ hasGrid, hasTrackballCamera }) {
+export default function Tree () {
 	const camera = new PerspectiveCamera(
 		70,
 		window.innerWidth / window.innerHeight,
@@ -83,12 +65,16 @@ export default function Tree ({ hasGrid, hasTrackballCamera }) {
 			enablePan={false}
 			enableRotate={false}
 			enableZoom={false}
-			autoRotateSpeed={ 0.5 }
+			autoRotateSpeed={ 0.2 }
 		/>
-		<TrackballControls
-		/>
-		{ hasGrid &&  <HelperMeshes />}
+		<TrackballControls panSpeed={0}/>
+		<Background color={0xFCFCFC} />
 
+		{ Array.from(new Array(10)).map((x, i) => <LineDomeProjection
+			key={i}
+			vertices={Math.round(200 * Math.random())}
+			stepSize={3 * Math.random()}
+		/>)}
 
 		<Text text='wybe minnebo' material={ materials.basicBlack } position={[-14, 0, 0]} onClick={(e) => console.log('On click', e)} />
 		<Text text='javascript, interaction design' material={ materials.basicBlack } size='1' position={[-14, -3, 0]} />
