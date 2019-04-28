@@ -32,7 +32,7 @@ export default function OrbitControlsComponent ({
 		controls.noPan = !panSpeed;
 
 		controls.staticMoving = true;
-		controls.dynamicDampingFactor = 0.3;
+		controls.dynamicDampingFactor = damping;
 
 		controls.keys = [
 			65, // key A

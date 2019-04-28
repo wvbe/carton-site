@@ -61,3 +61,7 @@ export const basicWhite = new MeshBasicMaterial({
 export const basicBlack = new MeshBasicMaterial({
 	color: 0x000000
 })
+export const basicGray = new MeshBasicMaterial({
+	color: 0x000000,
+	opacity: 0.25
+})

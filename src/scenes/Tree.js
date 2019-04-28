@@ -17,39 +17,27 @@ import {
 
 import * as materials from '../materials';
 
-import LineDomeProjection from '../compositions/LineDomeProjection';
+import NonBranchingLine, { getRandomVertices as x } from '../compositions/NonBranchingLine';
+import BranchingLine, { getRandomVertices } from '../compositions/BranchingLine';
+import TextFromFont from '../compositions/TextFromFont';
+import TextInQuickSuccession from '../compositions/TextInQuickSuccession';
 import OrbitControls from '../compositions/OrbitControls';
 import Background from '../compositions/Background';
 import TrackballControls from '../compositions/TrackballControls';
 
-function Text({
-	position,
-	rotation,
-	onClick,
-	material = materials.wireframe,
-	font = '/fonts/helvetiker_regular.typeface.json',
-	text,
-	size = 3,
-	height = 0.2,
-	curveSegments = 6,
-	...textGeometryProps
-}) {
-	const [textGeometry, setTextGeometry] = useState(null);
+const subjects = [
+	'web', 'responsive', 'interaction', 'tech', 'schema', 'nodejs', 'full-stack', 'intergalactic',
+	'usability', 'experience', 'multi-disciplinary', 'open-source', 'frontend', 'art', 'devops', 'graphic',
+	'software', 'creative', 'javascript', 'pixel', 'internet', 'communications', 'app', 'React', 'NodeJS', 'XML',
+	'XQuery'
+].map(x => x.toLowerCase());
 
-	useEffect(() => new FontLoader().load(font, (fontInstance) => {
-		setTextGeometry(new TextGeometry( text, {
-			font: fontInstance,
-			size,
-			height,
-			curveSegments,
-			...textGeometryProps
-		}));
-	}), [font]);
+const roles = [
+	'developer', 'designer', 'enthousiast', 'guru', 'ninja', 'wizard', 'harry', 'programmer', 'engineer',
+	'professional', 'architect', 'evangelist', 'strategist', 'consultant', 'technician', 'master', 'hacker',
+	'guy', 'person', 'buddy', 'pusher'
+];
 
-	return textGeometry ?
-		<mesh position={position} rotation={rotation} material={ material } geometry={textGeometry} onClick={onClick} /> :
-		null;
-}
 
 export default function Tree () {
 	const camera = new PerspectiveCamera(
@@ -70,13 +58,34 @@ export default function Tree () {
 		<TrackballControls panSpeed={0}/>
 		<Background color={0xFCFCFC} />
 
-		{ Array.from(new Array(10)).map((x, i) => <LineDomeProjection
+		{ Array.from(new Array(5)).map((x, i) => <BranchingLine
 			key={i}
-			vertices={Math.round(200 * Math.random())}
-			stepSize={3 * Math.random()}
+			vertices={getRandomVertices({
+				length: 30 + Math.round(100 * Math.random()),
+				stepSize: 3 + 4 * Math.random(),
+				maxDepth: 10
+			})}
+			material={materials.basicBlack}
+			// Vertex={() => null}
 		/>)}
 
-		<Text text='wybe minnebo' material={ materials.basicBlack } position={[-14, 0, 0]} onClick={(e) => console.log('On click', e)} />
-		<Text text='javascript, interaction design' material={ materials.basicBlack } size='1' position={[-14, -3, 0]} />
+		<group position={[-14, 0, 0]}>
+			<TextFromFont text='wybe minnebo' material={ materials.basicBlack } position={[0, 0, 0]} />
+			<TextInQuickSuccession
+				texts={Array.from(new Array(300)).map(() => [
+					subjects[Math.floor(Math.random() * subjects.length)],
+					roles[Math.floor(Math.random() * roles.length)],
+				].join(' '))}
+				material={ materials.basicBlack }
+				position={[0, -2, 0]}
+				size={1}
+			/>
+			<TextFromFont
+				text={'and shenanigans'}
+				material={ materials.basicBlack }
+				position={[0, -4, 0]}
+				size={1}
+			/>
+		</group>
 	</Canvas>;
 }

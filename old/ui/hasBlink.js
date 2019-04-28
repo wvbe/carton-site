@@ -14,8 +14,6 @@ export default function hasBlink (Comp, {
 		timeout = null;
 
 		componentDidMount () {
-			console.log('blink on');
-
 			let i = 0;
 			const switcheroo = () => {
 				const visible = decide(this.state.visible, i++);
@@ -40,7 +38,6 @@ export default function hasBlink (Comp, {
 		}
 
 		componentWillUnmount () {
-			console.log('blink off');
 			clearInterval(this.interval);
 			clearTimeout(this.timeout);
 
