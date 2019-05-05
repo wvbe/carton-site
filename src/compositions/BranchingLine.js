@@ -44,7 +44,7 @@ export function getRandomVertices ({
 
 export default function BranchingLine ({
 	position,
-	material,
+	lineMaterial,
 	vertices,
 	catmullRom,
 	depthAlongTree = 0,
@@ -60,7 +60,7 @@ export default function BranchingLine ({
 	const groups = [];
 	vertices.reduce((lastVertexOnMainBranch, vertex, i) => {
 		if (Array.isArray(vertex)) {
-			groups.push(<BranchingLine key={i} depthAlongTree={ depthAlongTree } vertices={ vertex } position={lastVertexOnMainBranch} material={material} Vertex={Vertex} />);
+			groups.push(<BranchingLine key={i} depthAlongTree={ depthAlongTree } vertices={ vertex } position={lastVertexOnMainBranch} lineMaterial={lineMaterial} Vertex={Vertex} />);
 			return lastVertexOnMainBranch;
 		}
 		return vertex;
@@ -68,7 +68,7 @@ export default function BranchingLine ({
 
 
 	return <group position={ position }>
-		<NonBranchingLine catmullRom={ catmullRom } vertices={ vertices.filter(vertex => !Array.isArray(vertex)) } material={materials.basicGray} />
+		<NonBranchingLine catmullRom={ catmullRom } vertices={ vertices.filter(vertex => !Array.isArray(vertex)) } material={lineMaterial} />
 		{ vertices
 			.filter(vertex => !Array.isArray(vertex))
 			.map((vertex, i, all) => <Vertex key={i} position={vertex} depthAlongTree={ depthAlongTree } depthAlongBranch={i / all.length}/>)

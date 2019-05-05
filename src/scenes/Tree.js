@@ -65,7 +65,7 @@ export default function Tree () {
 				stepSize: 3 + 4 * Math.random(),
 				maxDepth: 10
 			})}
-			material={materials.basicBlack}
+			lineMaterial={materials.basicGray}
 			// Vertex={() => null}
 		/>)}
 
