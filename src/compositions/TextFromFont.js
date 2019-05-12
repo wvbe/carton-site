@@ -6,6 +6,7 @@ import {
 
 import * as materials from '../materials';
 
+const fontRegistry = {};
 export default function Text({
 	position,
 	rotation,
@@ -20,7 +21,8 @@ export default function Text({
 }) {
 	const [textGeometry, setTextGeometry] = useState(null);
 
-	useEffect(() => new FontLoader().load(font, (fontInstance) => {
+	function setText (font) {
+		const fontInstance = fontRegistry[font];
 		setTextGeometry(new TextGeometry(text, {
 			font: fontInstance,
 			size,
@@ -28,6 +30,10 @@ export default function Text({
 			curveSegments,
 			...textGeometryProps
 		}));
+	}
+	useEffect(() => fontRegistry[font] ? setText(font) : new FontLoader().load(font, (fontInstance) => {
+		fontRegistry[font] = fontInstance;
+		setText(font);
 	}), [font, text]);
 
 	return textGeometry ?
