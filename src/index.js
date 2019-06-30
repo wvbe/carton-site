@@ -1,11 +1,14 @@
 import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols';
-
-let camera, scene, renderer;
+import BranchGrowth from './BranchGrowth';
 
 const MATERIAL_WIREFRAME = new THREE.MeshBasicMaterial({ wireframe: true, color: 0 });
 const MATERIAL_DERP = new THREE.MeshBasicMaterial({ wireframe: true, color: 'red' });
+
+let camera, scene, renderer;
 const animationFrameCallbacks = [];
+
+
 function getRandomVertices (
 	length = Math.random() * 300,
 	stepSize = 5 + Math.random() * 30,
@@ -53,25 +56,25 @@ function polyLine (vertices) {
 function multiPolyLine () {
 	const group = new THREE.Group();
 
-	for (let i = 0; i < 3; i++) {
+	for (let i = 0; i < 1; i++) {
 		if (!group.children.length) {
 			group.add(polyLine(getRandomVertices()));
 			continue;
 		}
 
-		const parentGroup = group.children[Math.floor(group.children.length * Math.random())].children[0];
+		const precedingLineInstance = group.children[Math.floor(group.children.length * Math.random())].children[0];
 
-		const parentVertex = parentGroup.geometry.vertices[Math.floor(parentGroup.geometry.vertices.length * Math.random())];
+		const branchOffPointVector3 = precedingLineInstance.geometry.vertices[Math.floor(precedingLineInstance.geometry.vertices.length * Math.random())];
 
 
-		group.add(polyLine(getRandomVertices(undefined, undefined, parentVertex)));
+		group.add(polyLine(getRandomVertices(undefined, undefined, branchOffPointVector3)));
 	}
 
 	console.log(group);
 
 	return group;
-
 }
+
 function init() {
 	const container = document.getElementById( 'container' );
 
@@ -117,7 +120,7 @@ function init() {
 	controls.damping = 0.2;
 	controls.addEventListener( 'change', render );
 
-	scene.add(multiPolyLine());
+	BranchGrowth.init(scene, true);
 }
 
 function animate() {
