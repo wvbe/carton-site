@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useCallback } from 'react';
 import Markdown from './Markdown';
-import rm from './blog/test.md';
+import resumeMd from './blog/resume.md';
+import projectsMd from './blog/projects.md';
 
 const states = {
 	IDLE: 0,
@@ -9,27 +10,29 @@ const states = {
 	ERROR: 3
 };
 
-const markdownFiles = [rm];
+const markdownFiles = [ resumeMd, projectsMd ];
 function App() {
-	const [activeFile, setActiveFile] = useState(null);
-	const [activeContent, setActiveContent] = useState(null);
-	const [status, setStatus] = useState(states.IDLE);
+	const [ activeContent, setActiveContent ] = useState(null);
 
 	const activateMd = useCallback(async (md) => {
-		setActiveFile(md);
-		setStatus(states.LOADING);
-		const content = await fetch(md).then(r => r.text());
+		const content = await fetch(md).then((r) => r.text());
 		setActiveContent(content);
-		setStatus(states.DONE);
 	});
-	return <div style={{ maxWidth: '800px', margin: '0 auto'}}>
-		<ol>
-			{markdownFiles.map(f => <li key={f}><a href="#" onClick={() => activateMd(f)}>{f}</a></li>)}
-		</ol>
-		{activeContent && <hr />}
-		{activeContent && <Markdown markdownString={activeContent} />}
-
-	</div>
+	return (
+		<div style={{ maxWidth: '800px', margin: '0 auto' }}>
+			<ol>
+				{markdownFiles.map((f) => (
+					<li key={f}>
+						<a href="#" onClick={() => activateMd(f)}>
+							{f}
+						</a>
+					</li>
+				))}
+			</ol>
+			{activeContent && <hr />}
+			{activeContent && <Markdown markdownString={activeContent} />}
+		</div>
+	);
 }
 
 export default App;
