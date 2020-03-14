@@ -1,37 +1,45 @@
-import React, { Fragment, useState, useCallback } from 'react';
-import Markdown from './Markdown';
-import resumeMd from './blog/resume.md';
-import projectsMd from './blog/projects.md';
+import React, { Fragment, useState, useCallback, useEffect } from 'react';
+import {
+	Switch,
+	Route,
+	Link,
+	useLocation
+} from "react-router-dom";
+import Banner from './Banner';
+import JournalRoute from './JournalRoute';
+import JOURNAL_ENTRIES from './JOURNAL_ENTRIES';
+import './App.css';
 
-const states = {
-	IDLE: 0,
-	LOADING: 1,
-	DONE: 2,
-	ERROR: 3
-};
 
-const markdownFiles = [ resumeMd, projectsMd ];
+const projectsMd = JOURNAL_ENTRIES.find(entry => entry.baseName.split('.')[0] === 'projects');
+
 function App() {
-	const [ activeContent, setActiveContent ] = useState(null);
-
-	const activateMd = useCallback(async (md) => {
-		const content = await fetch(md).then((r) => r.text());
-		setActiveContent(content);
-	});
+	const location = useLocation();
+	const isHomePage = !location.pathname || location.pathname === '/';
 	return (
-		<div style={{ maxWidth: '800px', margin: '0 auto' }}>
-			<ol>
-				{markdownFiles.map((f) => (
-					<li key={f}>
-						<a href="#" onClick={() => activateMd(f)}>
-							{f}
-						</a>
-					</li>
-				))}
-			</ol>
-			{activeContent && <hr />}
-			{activeContent && <Markdown markdownString={activeContent} />}
-		</div>
+		<>
+			<div className='app-banner' style={{ height: isHomePage ? '100vh' : '16em' }}>
+				<Banner>
+					{!isHomePage && <Link to='/'>&lt;</Link>}
+					<Link to={`/journal`}>Journal</Link>
+					<Link to={`/journal/${projectsMd.baseName}`}>Projects</Link>
+				</Banner>
+			</div>
+			<Switch>
+				<Route path="/journal/:journalName">
+					<JournalRoute />
+				</Route>
+				<Route path="/journal">
+					<ol>
+						{JOURNAL_ENTRIES.map((f) => (
+							<li key={f.fileName}>
+								<Link to={`/journal/${f.baseName}`}>{f.fileName}</Link>
+							</li>
+						))}
+					</ol>
+				</Route>
+			</Switch>
+		</>
 	);
 }
 

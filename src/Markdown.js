@@ -43,9 +43,9 @@ function MarkdownNode({ node }) {
 		return React.createElement(
 			'h' + node.depth,
 			{ style: { position: 'relative' } },
-			<div style={{ position: 'absolute', right: 'calc(100% + 1em)' }}>
-				{Array.from(new Array(node.depth)).map(() => '#').join('') + ' '}
-			</div>,
+			// <div style={{ position: 'absolute', right: 'calc(100% + 1em)' }}>
+			// 	{Array.from(new Array(node.depth)).map(() => '#').join('') + ' '}
+			// </div>,
 			<MarkdownNodes nodes={node.children} />
 		);
 	}

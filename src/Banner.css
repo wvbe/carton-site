@@ -1,0 +1,68 @@
+.banner {
+	flex: 1 1 auto;
+	max-width: 24em;
+	margin: 0 auto;
+}
+.banner-top {
+	border: 1px solid black;
+	border-radius: 3px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.banner__left {
+	display: flex;
+	flex-direction: column;
+	background-color: black;
+	color: white;
+	flex: 0 0 auto;
+	width: 4em;
+	height: 4em;
+	align-items: center;
+	justify-content: center;
+}
+.banner-logo {
+	width: auto;
+	height: 2em;
+}
+.banner__right {
+	flex: 1 1 auto;
+	padding: 0.5em 1em;
+}
+
+.banner-caption {
+	font-weight: bold;
+}
+
+.banner-subtitle {
+	font-size: 0.8em;
+}
+
+.banner-bottom {
+	margin-top: 1em;
+	font-size: 0.6em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.banner-bottom > div > * {
+	margin-left: 1em;
+}
+.banner-bottom > div > *:first-child {
+	margin-left: 0;
+}
+.banner-bottom a {
+	text-transform: uppercase;
+	padding: 0.5em;
+	font-weight: bold;
+	color: #999;
+	background: none !important;
+	border-bottom: 2px solid transparent;
+}
+
+.banner-bottom a:hover {
+	color: black;
+	border-bottom: 1px solid black;
+}

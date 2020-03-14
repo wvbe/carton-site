@@ -1,0 +1,8 @@
+.app-banner {
+	transition: height 0.25s;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: stretch;
+}
