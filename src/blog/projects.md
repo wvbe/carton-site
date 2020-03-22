@@ -1,6 +1,5 @@
 # Projects
 
-
 [xml-renderer](https://github.com/wvbe/xml-renderer), a nifty little lib that makes rendering an XML document with
 React, or similar, pretty easy. Works in a browser or on your server.
 

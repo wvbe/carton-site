@@ -1,8 +1,8 @@
 
 import path from 'path';
-import resumeMd from './blog/resume.md';
-import projectsMd from './blog/projects.md';
-import testMd from './blog/test.md';
+import resumeMd from './resume.md';
+import projectsMd from './projects.md';
+import testMd from './test.md';
 
 export default [
 	resumeMd,

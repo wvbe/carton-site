@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-
-import JOURNAL_ENTRIES from './JOURNAL_ENTRIES';
-import Markdown from './Markdown';
+import './JournalRoute.css';
+import JOURNAL_ENTRIES from '../blog';
+import Markdown from '../app/Markdown';
 
 export default function JournalRoute() {
 	const [activeContent, setActiveContent] = useState(null);
@@ -30,11 +30,10 @@ export default function JournalRoute() {
 			});
 	}, [journalName]);
 
-	return <div>
+	return <div className='journalRoute'>
 		{activeContent instanceof Error ?
 			<pre>{activeContent.stack}</pre> :
 			<Markdown markdownString={activeContent} />
 		}
 	</div>;
-
 }

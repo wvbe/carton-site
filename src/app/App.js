@@ -6,8 +6,8 @@ import {
 	useLocation
 } from "react-router-dom";
 import Banner from './Banner';
-import JournalRoute from './JournalRoute';
-import JOURNAL_ENTRIES from './JOURNAL_ENTRIES';
+import JournalRoute from '../routes/JournalRoute';
+import JOURNAL_ENTRIES from '../blog';
 import './App.css';
 
 

@@ -1,0 +1,18 @@
+html, body {
+	margin: 0;
+}
+body {
+	/* background-color: #f9b832; */
+	color: #333;
+	font-family: 'Open Sans', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-weight: 100;
+	line-height: 1.5;
+}
+
+#root {
+	max-width: 48em;
+	margin: 0 auto;
+	padding: 0 4em;
+}

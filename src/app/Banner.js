@@ -1,5 +1,5 @@
 import React from 'react';
-import melkpak from './pakmelktoch.svg';
+import PakMelkToch from './PakMelkToch.js';
 import './Banner.css';
 
 export default function Banner({ children }) {
@@ -7,7 +7,7 @@ export default function Banner({ children }) {
 		<div className='banner'>
 			<div className='banner-top'>
 				<div className='banner__left'>
-					<img src={melkpak} className='banner-logo' />
+					<PakMelkToch />
 				</div>
 				<div className='banner__right'>
 					<div className='banner-caption'>Wybe Minnebo</div>
