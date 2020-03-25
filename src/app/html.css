@@ -1,0 +1,51 @@
+h1,
+h2,
+h3,
+h4,
+h4,
+h5,
+h6 {
+	font-size: inherit;
+	font-weight: normal;
+}
+
+a {
+	padding: 0 0.25em;
+	text-decoration: none;
+	color: hsl(40, 94%, 59%);
+}
+
+a:hover {
+	color: white;
+	text-decoration: underline;
+}
+
+a:active {
+
+}
+
+li > p {
+	margin: 0;
+}
+
+code,
+pre {
+	font-family: monospace;
+	box-shadow: 1px 0 0 hsl(40, 94%, 59%), -1px 0 0 hsl(40, 94%, 59%);
+	background-color: hsl(40, 94%, 59%);
+	border-radius: 2px;
+}
+p {
+	margin-block-end: 1.5em;
+	margin-block-start: 1.5em;
+	margin-bottom: 1.5em;
+	margin-inline-end: 0px;
+	margin-inline-start: 0px;
+}
+code {
+	font-weight: bold;
+}
+
+pre {
+	padding: 0.5em 1em;
+}

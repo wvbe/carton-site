@@ -1,46 +1,47 @@
-import React, { Fragment, useState, useCallback, useEffect } from 'react';
-import {
-	Switch,
-	Route,
-	Link,
-	useLocation
-} from "react-router-dom";
+import React, {
+	// Fragment,
+	// useState,
+	// useCallback,
+	// useEffect
+} from 'react';
+// import {
+// 	Link,
+// 	useLocation
+// } from "react-router-dom";
 import Banner from './Banner';
-import JournalRoute from '../routes/JournalRoute';
-import JOURNAL_ENTRIES from '../blog';
+// import JOURNAL_ENTRIES from '../articles';
 import './App.css';
+import ExtLink from './ExtLinkToch';
+// import Routes from './Routes';
+
+// const projectsMd = JOURNAL_ENTRIES.find(entry => entry.baseName.split('.')[0] === 'projects');
 
 
-const projectsMd = JOURNAL_ENTRIES.find(entry => entry.baseName.split('.')[0] === 'projects');
+const bannerPrimaryButtons = <>
+	<a href="https://www.linkedin.com/in/wybeminnebo" target="_blank" rel="noopener noreferrer">LinkedIn <ExtLink /></a>
+	<a href="https://github.com/wvbe" target="_blank" rel="noopener noreferrer">Github <ExtLink /></a>
+</>;
+export default function App () {
 
-function App() {
-	const location = useLocation();
-	const isHomePage = !location.pathname || location.pathname === '/';
+	// const location = useLocation();
+	// const isHomePage = !location.pathname || location.pathname === '/';
+	// const bannerSecondaryButtons = <>
+	// 	{!isHomePage && <Link to='/' style={{ opacity: 0.3 }}>&lt;</Link>}
+	// 	<Link to={`/journal`}>Journal</Link>
+	// 	<Link to={`/journal/${projectsMd.baseName}`}>Projects</Link>
+	// </>;
+
+	const bannerSecondaryButtons = null;
+	const isHomePage = true;
+
 	return (
 		<>
-			<div className='app-banner' style={{ height: isHomePage ? '100vh' : '16em' }}>
-				<Banner>
-					{!isHomePage && <Link to='/'>&lt;</Link>}
-					<Link to={`/journal`}>Journal</Link>
-					<Link to={`/journal/${projectsMd.baseName}`}>Projects</Link>
-				</Banner>
+			<div className='app-banner' style={{ height: isHomePage ? '100vh' : '66vh' }}>
+				<Banner primaryButtons={bannerPrimaryButtons} secondaryButtons={bannerSecondaryButtons} />
 			</div>
-			<Switch>
-				<Route path="/journal/:journalName">
-					<JournalRoute />
-				</Route>
-				<Route path="/journal">
-					<ol>
-						{JOURNAL_ENTRIES.map((f) => (
-							<li key={f.fileName}>
-								<Link to={`/journal/${f.baseName}`}>{f.fileName}</Link>
-							</li>
-						))}
-					</ol>
-				</Route>
-			</Switch>
+			<div className='app-body'>
+				{/* <Routes /> */}
+			</div>
 		</>
 	);
 }
-
-export default App;

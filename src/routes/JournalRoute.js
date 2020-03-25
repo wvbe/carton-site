@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import './JournalRoute.css';
-import JOURNAL_ENTRIES from '../blog';
+import JOURNAL_ENTRIES from '../articles';
 import Markdown from '../app/Markdown';
 
 export default function JournalRoute() {
