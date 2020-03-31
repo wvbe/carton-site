@@ -2,9 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 
-import './app/reset.css';
-import './app/html.css';
-import './app/index.css';
+import './styles/reset.css';
+import './styles/styles.css';
 import App from './app/App';
 
 import * as serviceWorker from './serviceWorker';
