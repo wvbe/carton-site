@@ -17,7 +17,7 @@
     "xml-renderer": "^3.0.0"
   },
   "scripts": {
-	"deploy": "npx gh-pages --dist build",
+    "deploy": "npx gh-pages --dist build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

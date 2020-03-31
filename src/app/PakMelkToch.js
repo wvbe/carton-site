@@ -5,7 +5,7 @@ const whiteLineStyles = {
 	stroke: '#fff',
 	strokeLinecap: 'round',
 	strokeLinejoin: 'round',
-	strokeWidth: '18px',
+	strokeWidth: '12px',
 };
 
 export default () => <svg
