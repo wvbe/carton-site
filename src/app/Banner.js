@@ -2,7 +2,12 @@ import React from 'react';
 import IconMilkCarton from './IconMilkCarton.js';
 import { css } from 'emotion';
 
-export default function Banner({ caption = 'Wybe Minnebo', subtitle = 'Internet code guy', primaryButtons, secondaryButtons }) {
+export default function Banner({
+	caption = 'Wybe Minnebo',
+	subtitle = 'Internet code guy',
+	primaryButtons, secondaryButtons
+}) {
+	console.log('Render banner');
 	return (
 		<div className={css`
 			flex: 1 1 auto;
@@ -36,6 +41,7 @@ export default function Banner({ caption = 'Wybe Minnebo', subtitle = 'Internet 
 				`}>
 					<div className={css`
 						font-weight: normal;
+						user-select: text;
 					`}>{caption}</div>
 					<div className={css`
 						font-size: 0.8em;

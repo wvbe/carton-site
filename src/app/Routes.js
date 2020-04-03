@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import JournalRoute from '../routes/JournalRoute';
 import JOURNAL_ENTRIES from '../articles';
-import './App.css';
 
 export default function Routes () {
 	return (

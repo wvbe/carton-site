@@ -1,5 +1,8 @@
 import React from 'react';
 import { css } from 'emotion';
+import {
+	Link
+} from "react-router-dom";
 
 import IconExternalLink from './IconExternalLink';
 
@@ -26,16 +29,17 @@ const className = css`
 `;
 
 export default function BannerButton({
-	isExternalLink,
+	route,
 	children,
-	...props
+	...rest
 }) {
-	const additionalProps = isExternalLink ? {
-		target: '_blank',
-		rel: 'noopener noreferrer'
-	} : {};
-	return <a className={className} {...additionalProps} {...props}>
-		{children}
-		{isExternalLink ? <>{' '}<IconExternalLink /></> : null}
-	</a>;
+	if (rest.href) {
+		return <a target='_blank' rel='noopener noreferrer' className={className} {...rest}>
+			{ children }
+			{' '}
+			<IconExternalLink />
+		</a>
+	}
+
+	return <Link to={route} className={className} children={children} {...rest}/>
 };

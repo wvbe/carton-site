@@ -8,11 +8,13 @@ import './styles/styles.css';
 import App from './app/App';
 
 import * as serviceWorker from './serviceWorker';
-import backgroundImage from './images/webb-dark.png';
 
-document.body.setAttribute('class', css`
-	background-image: url('${backgroundImage}');
-`);
+
+// import backgroundImage from './images/webb-dark.png';
+// document.body.setAttribute('class', css`
+// 	background-image: url('${backgroundImage}');
+// `);
+
 
 ReactDOM.render(
 	<BrowserRouter>

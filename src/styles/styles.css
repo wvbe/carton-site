@@ -5,6 +5,13 @@ body {
 	font-weight: 100;
 	line-height: 1.5;
 	font-size: 0.7em;
+
+	/*
+	When navigating between routes we dont want the scrollbar to flash
+	this is a stopgap solution while routes are enabled in the first place
+	 */
+	/* overflow-y: scroll; */
+	user-select: none;
 }
 
 #root {
