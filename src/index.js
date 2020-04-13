@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 import { css } from 'emotion';
 
 import './styles/reset.css';
@@ -9,12 +9,13 @@ import App from './app/App';
 
 import * as serviceWorker from './serviceWorker';
 
-
-// import backgroundImage from './images/webb-dark.png';
-// document.body.setAttribute('class', css`
-// 	background-image: url('${backgroundImage}');
-// `);
-
+import backgroundImage from './images/concrete_wall.png';
+document.body.setAttribute(
+	'class',
+	css`
+	background-image: url('${backgroundImage}');
+`
+);
 
 ReactDOM.render(
 	<BrowserRouter>
