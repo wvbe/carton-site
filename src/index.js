@@ -9,7 +9,7 @@ import App from './app/App';
 
 import * as serviceWorker from './serviceWorker';
 
-import backgroundImage from './images/concrete_wall.png';
+import backgroundImage from './images/concrete_wall.gif';
 document.body.setAttribute(
 	'class',
 	css`
