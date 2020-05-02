@@ -1,0 +1,11 @@
+{
+	"name": "website100002",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"deploy": "npx gh-pages --dist ."
+	},
+	"author": "",
+	"license": "ISC"
+}
