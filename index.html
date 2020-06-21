@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>Wybe Minnebo, NL, 1988</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#ffffff" />
-		<meta name="description" content="The website of a lazy programmer" />
-		<title>wybe minnebo, 31 M NL</title>
+		<meta
+			name="description"
+			content="I'm a guy in tech, so don't waste your time on this website and go to my LinkedIn or GitHub instead."
+		/>
 		<style>
 			h1 {
-				font-family: Arial, Helvetica, sans-serif;
 				font-weight: inherit;
 				font-size: inherit;
+				margin: 0.5em 0 0 0;
+				white-space: nowrap;
 			}
 
-			div {
-				text-align: center;
+			#container {
+				font-family: Helvetica, Arial, sans-serif;
+				text-align: left;
 				position: absolute;
+				max-width: 5em;
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
 			}
 			.carton {
-				width: auto;
-				height: 7em;
+				height: auto;
+				width: 100%;
+			}
+			.img {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
 			}
 			.carton > * {
 				fill: none;
@@ -31,19 +42,56 @@
 				stroke-linejoin: round;
 				stroke-width: 18px;
 			}
+			.micro {
+				font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+				font-size: 3px;
+				text-transform: uppercase;
+				font-weight: bold;
+				text-align: justify;
+				line-height: 3px;
+				width: 86%;
+			}
+
+			.qr {
+				width: 50%;
+				float: right;
+				height: auto;
+				margin: -0.8em -0.8em 0 0.4em;
+			}
+
+			.qr rect {
+				width: 100;
+				height: 100;
+				fill: black;
+			}
 		</style>
 	</head>
 	<body>
-		<div>
+		<div id="container">
 			<svg class="carton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 552 654.5">
-				<polygon points="59 214 274 236 274 605 59 502"></polygon>
-				<polygon points="502 496 274 605 274 236 502 212"></polygon>
-				<polygon points="148 129 388 126 274 236 59 214"></polygon>
-				<polygon points="274 236 388 126 502 212"></polygon>
-				<polygon points="148 76 387 59 388 126 148 129"></polygon>
+				<polygon points="59 214 274 236 274 605 59 502" />
+				<polygon points="502 496 274 605 274 236 502 212" />
+				<polygon points="148 129 388 126 274 236 59 214" />
+				<polygon points="274 236 388 126 502 212" />
+				<polygon points="148 76 387 59 388 126 148 129" />
 			</svg>
-
-			<h1>wybe minnebo</h1>
+			<h1 style="text-align: center;">Wybe<br />Minnebo</h1>
+			<div class="micro img">
+				<img src="qr-code.svg" class="img qr" />
+				<p>I usually go by `wybe` or `wvbe` on the internet.</p>
+				<p>
+					I work on an awesome user-centric web-based application as a `product owner`,
+					and as a `tech evangelic` and `developer` before that.
+				</p>
+				<p>
+					There's some open-source modules for `NodeJS` that I've used in or developed for
+					my professional/hobby work on `GitHub`.
+				</p>
+				<p>
+					If you want to reach me out of the blue, `LinkedIn` is the way to go. It is also
+					my most up-to-date `CV`.
+				</p>
+			</div>
 		</div>
 	</body>
 </html>
