@@ -6,6 +6,5 @@
 	"scripts": {
 		"deploy": "npx gh-pages --dist ."
 	},
-	"author": "",
-	"license": "ISC"
+	"license": "NONE"
 }
