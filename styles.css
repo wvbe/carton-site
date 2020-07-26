@@ -1,0 +1,54 @@
+h1 {
+	font-weight: inherit;
+	font-size: inherit;
+	margin: 0.5em 0 0 0;
+	white-space: nowrap;
+}
+
+#container {
+	font-family: Helvetica, Arial, sans-serif;
+	text-align: left;
+	position: absolute;
+	max-width: 5em;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.carton {
+	height: auto;
+	width: 100%;
+}
+.img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+.carton > * {
+	fill: none;
+	stroke: #000000;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 18px;
+}
+.micro {
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 3px;
+	text-transform: uppercase;
+	font-weight: bold;
+	text-align: justify;
+	line-height: 3px;
+	width: 86%;
+}
+
+.qr {
+	width: 50%;
+	float: right;
+	height: auto;
+	margin: -0.8em -0.8em 0 0.4em;
+}
+
+.qr rect {
+	width: 100;
+	height: 100;
+	fill: black;
+}

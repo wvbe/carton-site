@@ -1,6 +1,17 @@
-<svg version="1.1" id="Layer_1"
+<svg
+	version="1.1"
+	id="Layer_1"
+	class="img qr"
 	xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1160px" height="1160px" viewBox="0 0 1160 1160" enable-background="new 0 0 1160 1160" xml:space="preserve">
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	x="0px"
+	y="0px"
+	width="1160px"
+	height="1160px"
+	viewBox="0 0 1160 1160"
+	enable-background="new 0 0 1160 1160"
+	xml:space="preserve"
+>
 	<rect x="0" y="0" width="1160" height="1160" fill="rgb(255,255,255)" />
 	<g transform="translate(80,80)">
 		<g transform="translate(320,0) scale(0.4,0.4)">
@@ -1171,7 +1182,7 @@
 		<g transform="translate(0,0) scale(2.8, 2.8)">
 			<g transform="" style="fill: rgb(0, 0, 0);">
 				<g>
-					<rect x="15" y="15" style="fill:none;" width="70" height="70" />
+					<rect x="15" y="15" style="fill: none;" width="70" height="70" />
 					<path d="M85,0H15H0v15v70v15h15h70h15V85V15V0H85z M85,85H15V15h70V85z" />
 				</g>
 			</g>
@@ -1179,7 +1190,7 @@
 		<g transform="translate(720,0) scale(2.8, 2.8)">
 			<g transform="" style="fill: rgb(0, 0, 0);">
 				<g>
-					<rect x="15" y="15" style="fill:none;" width="70" height="70" />
+					<rect x="15" y="15" style="fill: none;" width="70" height="70" />
 					<path d="M85,0H15H0v15v70v15h15h70h15V85V15V0H85z M85,85H15V15h70V85z" />
 				</g>
 			</g>
@@ -1187,7 +1198,7 @@
 		<g transform="translate(0,720) scale(2.8, 2.8)">
 			<g transform="" style="fill: rgb(0, 0, 0);">
 				<g>
-					<rect x="15" y="15" style="fill:none;" width="70" height="70" />
+					<rect x="15" y="15" style="fill: none;" width="70" height="70" />
 					<path d="M85,0H15H0v15v70v15h15h70h15V85V15V0H85z M85,85H15V15h70V85z" />
 				</g>
 			</g>
