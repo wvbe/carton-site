@@ -1,10 +1,11 @@
 {
-	"name": "website100002",
+	"name": "wv.be",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"private": true,
+	"license": "NONE",
 	"scripts": {
+		"python": "python -m http.server 8000",
 		"deploy": "npx gh-pages --dist ."
-	},
-	"license": "NONE"
+	}
 }
