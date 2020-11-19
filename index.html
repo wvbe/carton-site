@@ -10,13 +10,6 @@
 			content="I'm a guy in tech, so don't waste your time on my silly homepage and go to my LinkedIn or GitHub instead."
 		/>
 		<style>
-			h1 {
-				font-weight: inherit;
-				font-size: inherit;
-				margin: 0.5em 0 0 0;
-				white-space: nowrap;
-			}
-
 			#container {
 				font-family: Helvetica, Arial, sans-serif;
 				text-align: left;
@@ -26,76 +19,98 @@
 				left: 50%;
 				transform: translate(-50%, -50%);
 			}
-			.carton {
+			#carton {
 				height: auto;
 				width: 100%;
 			}
-			.img {
-				display: block;
-				margin-left: auto;
-				margin-right: auto;
-			}
-			.carton > * {
+			#carton > * {
 				fill: none;
 				stroke: #000000;
 				stroke-linecap: round;
 				stroke-linejoin: round;
 				stroke-width: 18px;
 			}
-			.micro {
-				font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-				font-size: 3px;
-				text-transform: uppercase;
-				font-weight: bold;
-				text-align: justify;
-				line-height: 3px;
-				width: 86%;
-			}
-
-			.qr {
+			#qr {
 				width: 50%;
 				float: right;
 				height: auto;
 				margin: -0.8em -0.8em 0 0.4em;
 			}
-
-			.qr rect {
+			#qr rect {
 				width: 100;
 				height: 100;
 				fill: black;
+			}
+			#own-url {
+				font-size: 50%;
+				display: block;
+				text-align: center;
+				padding: 1px 0;
+			}
+			h1 {
+				text-align: center;
+				font-weight: inherit;
+				font-size: inherit;
+				margin: 0.5em 0 0 0;
+				white-space: nowrap;
+			}
+			a {
+				color: white;
+				background-color: black;
+				padding: 0 2em;
+			}
+			.content-box {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				width: 86%;
+			}
+			.micro {
+				/* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+				font-size: 4px;
+				line-height: 1em;
+				text-transform: uppercase;
+				font-weight: bold;
+				text-align: justify;
+				margin: 0 auto;
 			}
 		</style>
 	</head>
 	<body>
 		<div id="container">
-			<svg class="carton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 552 654.5">
+			<svg id="carton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 552 654.5">
 				<polygon points="59 214 274 236 274 605 59 502" />
 				<polygon points="502 496 274 605 274 236 502 212" />
 				<polygon points="148 129 388 126 274 236 59 214" />
 				<polygon points="274 236 388 126 502 212" />
 				<polygon points="148 76 387 59 388 126 148 129" />
 			</svg>
-			<h1 style="text-align: center;">Wybe<br />Minnebo</h1>
-			<div class="micro img">
-				<img src="qr.svg" class="img qr" alt="A mysterious QR code" />
-				<p>I usually go by `wybe` or `wvbe` on the internet.</p>
-				<p>
-					I work on an awesome user-centric web-based application as a `product owner`,
-					and as a `tech evangelic` and `developer` before that.
-				</p>
-				<p>
-					There's some open-source modules for `NodeJS` that I've used in or developed for
-					my professional/hobby work on `<a href="https://github.com/wvbe" target="_blank"
-						>GitHub</a
-					>`.
-				</p>
-				<p>
-					If you want to reach me out of the blue, `<a
-						href="https://www.linkedin.com/in/wybeminnebo/"
-						target="_blank"
-						>LinkedIn</a
-					>` is the way to go. It is also my most up-to-date `CV`.
-				</p>
+			<div class="content-box">
+				<a href="//wv.be" id="own-url">//wv.be/</a>
+				<h1>Wybe<br />Minnebo</h1>
+				<div class="micro">
+					<img src="qr.svg" id="qr" alt="A mysterious QR code" />
+					<p>I usually go by `wybe` or `wvbe` on the internet.</p>
+					<p>
+						I work on an awesome user-centric web-based application as a `product
+						owner`, and as a `tech evangelic` and `developer` before that.
+					</p>
+					<p>
+						There's some open-source modules for `NodeJS` that I've used in or developed
+						for my professional/hobby work on `<a
+							href="https://github.com/wvbe"
+							target="_blank"
+							>GitHub</a
+						>`.
+					</p>
+					<p>
+						If you want to reach me out of the blue, `<a
+							href="https://www.linkedin.com/in/wybeminnebo/"
+							target="_blank"
+							>LinkedIn</a
+						>` is the way to go. It is also my most up-to-date `CV`.
+					</p>
+				</div>
 			</div>
 		</div>
 	</body>
