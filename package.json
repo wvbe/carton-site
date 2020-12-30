@@ -5,6 +5,7 @@
 	"private": true,
 	"license": "NONE",
 	"scripts": {
+		"python2": "python -m SimpleHTTPServer 8000",
 		"python": "python -m http.server 8000",
 		"deploy": "npx gh-pages --dist ."
 	}
