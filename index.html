@@ -10,35 +10,49 @@
 			content="I'm a guy in tech, so don't waste your time on my silly homepage and go to my LinkedIn or GitHub instead."
 		/>
 		<style>
+			:root {
+				--column-count: 3;
+				--column-gutter: 16px;
+				--column-width: 64px;
+			}
 			#container {
 				display: flex;
 				flex-direction: row;
-				font-family: Helvetica, Arial, sans-serif;
+				align-items: center;
 				text-align: left;
 				position: absolute;
-				max-width: 10em;
+				font-size: 4px;
+				font-family: Helvetica, Arial, sans-serif;
+				width: calc(
+					var(--column-count) * var(--column-width) + (var(--column-count) - 1) *
+						var(--column-gutter)
+				);
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
 			}
-			#scene {
-				width: 50%;
-				margin-right: 16px;
-			}
-			#three {
-				position: relative;
-				left: 50%;
-				z-index: 0;
-				margin-bottom: 0em;
-				transform: translateX(-50%);
-			}
-			#content {
+			#container > * {
 				position: relative;
 				z-index: 1;
 				display: block;
-				margin-left: auto;
-				margin-right: auto;
-				width: 50%;
+				width: var(--column-width);
+				margin-right: var(--column-gutter);
+			}
+
+			#container > *:last-of-type {
+				margin-right: 0;
+			}
+
+			#scene {
+				box-sizing: border-box;
+				position: relative;
+			}
+			#three {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				z-index: 0;
+				transform: translate(-50%, -50%);
 			}
 			#qr {
 				width: 50%;
@@ -46,17 +60,23 @@
 				height: auto;
 				margin: -0.8em -0.8em 0 0.4em;
 			}
-			#own-url {
-				font-size: 50%;
+			.button {
+				font-size: 8px;
 				display: block;
-				text-align: center;
-				padding: 1px 0;
+				/* text-align: center; */
+				padding: 1px 2px;
+				margin-bottom: 1px;
+				text-decoration: none;
+			}
+			.button:hover,
+			a:hover {
+				background-color: blue;
 			}
 			h1 {
+				font-size: 12px;
 				text-align: center;
 				font-weight: inherit;
-				font-size: inherit;
-				margin: 0.5em 0 0 0;
+				margin: 0;
 				white-space: nowrap;
 			}
 			a {
@@ -65,8 +85,6 @@
 				padding: 0 2em;
 			}
 			.micro {
-				/* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
-				font-size: 4px;
 				line-height: 1em;
 				text-transform: uppercase;
 				font-weight: bold;
@@ -78,8 +96,7 @@
 	<body>
 		<div id="container">
 			<div id="scene"></div>
-			<div id="content">
-				<a href="//wyb.be" id="own-url">//wyb.be/</a>
+			<div>
 				<h1>Wybe<br />Minnebo</h1>
 				<div class="micro">
 					<img src="qr.svg" id="qr" alt="A mysterious QR code" />
@@ -105,6 +122,18 @@
 					</p>
 				</div>
 			</div>
+			<div>
+				<a href="//wyb.be" class="button">//wyb.be/</a>
+				<a href="//wybe.pizza" class="button">//wybe.pizza/</a>
+				<br />
+				<a href="https://github.com/wvbe" class="button">↳ github</a>
+				<a href="https://www.npmjs.com/~wvbe" class="button">↳ npmjs</a>
+				<a href="https://www.linkedin.com/in/wybeminnebo/" class="button">↳ linkedin</a>
+				<a href="https://www.facebook.com/wvvbe/" class="button">↳ facebook</a>
+				<a href="https://www.instagram.com/wvvbe/" class="button">↳ instagram</a>
+				<a href="https://wvvbe.medium.com/" class="button">↳ medium</a>
+				<a href="https://twitter.com/wvbe" class="button">↳ twitter</a>
+			</div>
 		</div>
 	</body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
@@ -115,6 +144,7 @@
 			const mesh = new THREE.Mesh(geometry, material);
 			return mesh;
 		}
+
 		function makeRoofStruct() {
 			const shape = new THREE.Shape();
 			shape.moveTo(0, 0);
@@ -137,6 +167,7 @@
 			mesh.translateX(-0.5);
 			return mesh;
 		}
+
 		function makeFinStruct() {
 			const geometry = new THREE.BoxGeometry(0.01, 0.1, 1);
 			const material = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
@@ -145,13 +176,13 @@
 			return mesh;
 		}
 
-		const goldenRatio = (1 + Math.sqrt(5)) / 2;
-		const WIDTH = 150,
-			HEIGHT = 150,
-			aspect = HEIGHT / WIDTH;
+		const goldenRatio = (1 + Math.sqrt(5)) / 1.5;
+		const canvasWidth = 150,
+			canvastHeight = 150,
+			canvasAspect = canvastHeight / canvasWidth;
 
 		const renderer = new THREE.WebGLRenderer({ antialias: true });
-		renderer.setSize(WIDTH, HEIGHT);
+		renderer.setSize(canvasWidth, canvastHeight);
 		renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
 		renderer.setClearColor('#ffffff');
 
@@ -164,30 +195,15 @@
 		const scene = new THREE.Scene();
 		scene.add(group);
 
-		const zoom = 1.5;
-		// const camera = new THREE.OrthographicCamera(
-		// 	-zoom * aspect,
-		// 	zoom * aspect,
-		// 	zoom,
-		// 	-zoom,
-		// 	0.1,
-		// 	100
-		// );
-		// camera.position.set(4, 4, 4);
-
-		const camera = new THREE.PerspectiveCamera(35, aspect, 0.1, 9);
-		camera.position.set(4, 0.71, 0);
-
+		const camera = new THREE.PerspectiveCamera(25, canvasAspect, 0.1, 10);
+		camera.position.set(8, 0.71, 0);
 		camera.lookAt(scene.position);
-
-		// camera.lookAt(scene.position); // or the origin
 
 		renderer.domElement.setAttribute('id', 'three');
 		document.getElementById('scene').appendChild(renderer.domElement);
 
 		const render = function () {
 			requestAnimationFrame(render);
-			// group.rotation.x += 0.01;
 			group.rotation.y += 0.01;
 			renderer.render(scene, camera);
 		};
